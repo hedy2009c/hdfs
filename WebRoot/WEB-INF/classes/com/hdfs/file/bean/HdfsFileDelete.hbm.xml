@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-3-16 15:10:21 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.hdfs.file.bean.HdfsFileDelete" table="hdfs_file_delete" catalog="hdfs">
+        <id name="fileId" type="long">
+            <column name="file_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="fileName" type="string">
+            <column name="file_name" length="20" not-null="true">
+                <comment>&#206;&#196;&#188;&#254;&#181;&#196;&#195;&#251;&#215;&#214;</comment>
+            </column>
+        </property>
+        <property name="parentid" type="long">
+            <column name="parentid" not-null="true">
+                <comment>&#206;&#196;&#188;&#254;&#203;&#249;&#212;&#218;&#196;&#191;&#194;&#188;</comment>
+            </column>
+        </property>
+        <property name="size" type="java.lang.Long">
+            <column name="size">
+                <comment>&#206;&#196;&#188;&#254;&#180;&#243;&#208;&#161;&#163;&#172;&#181;&#165;&#206;&#187;&#206;&#170;kb</comment>
+            </column>
+        </property>
+        <property name="fileUrl" type="string">
+            <column name="file_url" length="30" not-null="true">
+                <comment>&#188;&#254;&#206;&#196;&#181;&#196;url</comment>
+            </column>
+        </property>
+        <property name="createTime" type="timestamp">
+            <column name="create_time" length="19">
+                <comment>&#180;&#180;&#189;&#168;&#206;&#196;&#188;&#254;&#181;&#196;&#202;&#177;&#188;&#228;</comment>
+            </column>
+        </property>
+        <property name="modifiedTime" type="timestamp">
+            <column name="modified_time" length="19">
+                <comment>&#215;&#238;&#186;&#243;&#208;&#222;&#184;&#196;&#202;&#177;&#188;&#228;</comment>
+            </column>
+        </property>
+        <property name="safeLevel" type="java.lang.Integer">
+            <column name="safe_level">
+                <comment>
+                &#176;&#178;&#200;&#171;&#188;&#182;&#177;&#240;&#163;&#172;1,2,3&#163;&#172;&#183;&#214;&#177;&#240;&#182;&#212;&#211;&#166;&#181;&#205;&#214;&#208;&#184;&#223;</comment>
+            </column>
+        </property>
+        <property name="timing" type="java.lang.Integer">
+            <column name="timing">
+                <comment>&#182;&#168;&#202;&#177;&#202;&#177;&#188;&#228;
+                ,-1&#177;&#237;&#202;&#190;&#211;&#192;&#190;&#195;&#180;&#230;&#180;&#162;&#163;&#172;&#198;&#228;&#203;&#251;&#202;&#177;&#188;&#228;&#181;&#165;&#206;&#187;&#206;&#170;&#204;&#236;</comment>
+            </column>
+        </property>
+        <property name="importantLevel" type="java.lang.Integer">
+            <column name="important_level">
+                <comment>
+                &#206;&#196;&#188;&#254;&#181;&#196;&#214;&#216;&#210;&#170;&#188;&#182;&#177;&#240;&#163;&#172;1&#180;&#250;&#177;&#237;&#198;&#213;&#205;&#168;&#163;&#172;2&#214;&#216;&#210;&#170;&#163;&#172;3&#183;&#199;&#179;&#163;&#214;&#216;&#210;&#170;</comment>
+            </column>
+        </property>
+        <property name="fsId" type="java.lang.Integer">
+            <column name="fs_id">
+                <comment>&#211;&#166;&#182;&#212;&#181;&#196;&#206;&#196;&#188;&#254;&#207;&#181;&#205;&#179;&#181;&#196;ID</comment>
+            </column>
+        </property>
+        <property name="type" type="int">
+            <column name="type" not-null="true">
+                <comment>directory: 0,doc: 1,txt: 2,image: 3,exe: 4,music: 5,rar: 6,zip: 7,html: 8,pdf: 9,undefined: 10,xls: 11</comment>
+            </column>
+        </property>
+        <property name="userId" type="java.lang.Long">
+            <column name="user_id" />
+        </property>
+    </class>
+</hibernate-mapping>

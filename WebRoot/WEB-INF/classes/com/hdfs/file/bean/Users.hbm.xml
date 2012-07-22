@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-3-16 15:10:21 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.hdfs.file.bean.Users" table="users" catalog="hdfs">
+        <id name="userId" type="java.lang.Long">
+            <column name="user_id" />
+            <generator class="identity" />
+        </id>
+        <property name="username" type="string">
+            <column name="username" length="20" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" />
+        </property>
+        <property name="phone" type="string">
+            <column name="phone" length="11" />
+        </property>
+        <property name="memoryId" type="java.lang.Integer">
+            <column name="memory_id" />
+        </property>
+        <property name="active" type="java.lang.Integer">
+            <column name="active" />
+        </property>
+        <property name="rootDirectory" type="string">
+            <column name="root_directory" length="30">
+                <comment>
+                &#211;&#195;&#187;&#167;&#182;&#212;&#211;&#166;&#181;&#196;&#184;&#249;&#196;&#191;&#194;&#188;&#163;&#172;&#182;&#212;&#211;&#166;&#211;&#218;directory&#192;&#239;&#195;&#230;&#181;&#196;&#196;&#191;&#194;&#188;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

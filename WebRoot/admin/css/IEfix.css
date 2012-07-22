@@ -1,0 +1,14 @@
+ul.dash li, ul.dash .bubble, .ui-widget,
+a.table_icon, table.normal thead, a.button_link, .notification,
+fieldset, fieldset legend, fieldset input, fieldset select
+{
+	behavior:url('css/PIE.htc');
+}
+
+ul.dash li {
+	overflow:visible;
+}
+
+.inner {
+	overflow:hidden;
+}

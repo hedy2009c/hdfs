@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-3-16 15:10:21 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.hdfs.file.bean.HdfsFilesystem" table="hdfs_filesystem" catalog="hdfs">
+        <id name="fsId" type="int">
+            <column name="fs_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="fsUrl" type="string">
+            <column name="fs_url" length="40" not-null="true">
+                <comment>&#206;&#196;&#188;&#254;&#207;&#181;&#205;&#179;&#181;&#196;url</comment>
+            </column>
+        </property>
+        <property name="fsName" type="string">
+            <column name="fs_name" length="30" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

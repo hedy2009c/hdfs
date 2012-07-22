@@ -1,0 +1,70 @@
+﻿@charset "utf-8";
+/*
+版本:	2010-04-14
+*/
+* html { ie6PngRepair:true; }/*设置主题是否针对IE6应用PNS透明与背景定位修复*/
+.ui_overlay div { background:#000; filter:alpha(opacity=70); opacity:0.7; }/*设置遮罩颜色与透明度*/
+.ui_dialog_main { background:#FFF; }
+.ui_title { width:100%; height:30px; position:absolute; top:3px; left:0; _left:auto; font-size:12px; }
+.ui_title_text { height:29px; line-height:29px; padding:0 30px 0 25px; _padding:0 0 0 15px;  color:#FFF; font-weight:700; text-shadow:0 1px 5px #000; }
+.ui_content.ui_iframe { background:url(../images/loading.gif) no-repeat center center; }/*iframe加载的loading动画(IE不支持)*/
+/*
+		r0d0:左上角, r0d1:上边, r0d2:右上角, r1d2:右边, r2d2:右下角, r2d1:下边, r2d0:左下角, r1d0:左边
+*/
+.r0d0, .r0d2, .r2d0, .r2d2, .r0d1, .r2d1, .ui_title_icon, .ui_close, .ui_resize { background-image:url(aero_s.png); background-repeat:no-repeat; }
+.r0d0 { width:14px; height:34px; background-position: 0 0; }
+.r0d2 { width:14px; height:34px; background-position: -14px 0; }
+.r2d0 { width:14px; height:14px; background-position: 0 -34px; }
+.r2d2 { width:14px; height:14px; background-position: -14px -34px; }
+.ui_title_icon { width:11px; height:11px; position:absolute; left:10px; _left:0px; top:9px; background-position:0 -109px; }
+.ui_close { top:7px; right:12px; _right:0; width:13px; height:13px; background-position:left -96px; _font-size:0; _line-height:0; text-indent:-9999em; }
+* html .ui_close div { cursor:pointer; }/*IE6修复png的时候会插入一个div导致原有的a标签失去了应有的鼠标样式*/
+.ui_close:hover { background-position:right -96px; }
+.ui_resize { width:10px; height:10px; background-position:right bottom; }
+.r0d1, .r2d1 { background-repeat:repeat-x; }
+.r0d1 { background-position: 0 -48px; }
+.r2d1 { background-position: 0 -82px; }
+.r1d0, .r1d2 { background-image:url(aero_s2.png); background-repeat:repeat-y; }
+.r1d0 { background-position:left top; }
+.r1d2 { background-position: right bottom; }
+.ui_btns { background-color:#F6F6F6; font-size:12px; -moz-border-radius:4px; -webkit-border-radius: 4px; border-radius:4px; }
+.ui_btns span, .ui_btns button { background-color:transparent; background-image:url(btns.png); background-repeat:no-repeat; }
+.ui_btns span { padding:0 0 0 6px; overflow:hidden; }
+.ui_btns button { height:31px; line-height:31px; padding:0 12px 0 6px; max-width:200px;  border:none 0; font-size:12px; }
+.ui_yes { background-position:left -124px; }
+.ui_yes:hover, .ui_yes.ui_hover { background-position:left -155px; }
+.ui_yes button { color:#f0f0f0; text-shadow:0 -1px 0 #000; background-position:right 0; }
+.ui_yes:hover button, .ui_yes.ui_hover button { background-position:right -31px; }
+.ui_no { background-position:left -186px; }
+.ui_no:hover { background-position:left -217px; }
+.ui_no button { color:#666; text-shadow:0 1px 0 #FFF; background-position:right -62px; }
+.ui_no:hover button { background-position:right -93px; }
+html:hover .ui_btns button:focus { outline:none 0; }
+
+/*
+皮肤拓展参数[可添加组合在'style'参数中]
+*/
+.ui_dialog_icon { display:inline-block; *zoom:1; *display:inline; background-image:url(icons.png); background-repeat:no-repeat; }
+/*警告消息*/
+.alert .ui_dialog_icon { margin-right:10px; width:48px; height:48px; background-position:0 -96px; }
+/*询问消息*/
+.confirm .ui_dialog_icon { margin-right:10px; width:48px; height:48px; background-position:0 -144px; }
+/*错误消息*/
+.error .ui_dialog_icon { margin-right:10px; width:48px; height:48px; background-position:0 -48px; }
+/*成功消息*/
+.succeed .ui_dialog_icon { margin-right:10px; width:48px; height:48px; background-position:0 0;}
+
+/*没有标题栏*/
+.noTitleBar .ui_title_wrap { height:0; _display:none; visibility:hidden; }
+/*无标题文字*/
+.noTitle .ui_title_text { visibility:hidden; }
+.noTitle .ui_close { }
+.noTitle .ui_content { margin-top:0; }
+/*无关闭按钮*/
+.noClose .ui_close { display:none; }
+/*无任何风格*/
+.noSkin .ui_border, .noSkin .ui_title_wrap, .noSkin .ui_dialog_icon { display:none; }
+.noSkin .ui_bottom_wrap { display:none; *display:block; *height:0; overflow:hidden; }
+* html .noSkin .ui_btns { height:0; overflow:hidden; position:absolute; left:-99999em; }
+.noSkin .ui_content { margin:0; }
+.noSkin .ui_dialog_main { background:transparent; }

@@ -1,0 +1,52 @@
+﻿@charset "utf-8";
+/*
+版本:	2010-04-14
+*/
+* html { ie6PngRepair:false; }/*设置主题是否针对IE6应用PNS透明与背景定位修复[本主题使用的是png 8位全透明图片，不需要针对IE6处理]*/
+.ui_overlay div { background:#000; filter:alpha(opacity=70); opacity:0.7; }/*设置遮罩颜色与透明度*/
+.ui_dialog_main { background:#FFF; }
+.ui_title_wrap { _width:100px; }/*IE6下设置一个最小长度，防止关闭按钮错位*/
+.ui_title { width:100%; height:26px; position:absolute; top:0; left:0; _left:auto; font-size:12px; }
+.ui_title_text { height:26px; line-height:25px; padding:0 60px 0 12px; _padding:0 90px 0 6px; color:#FFF; font-weight:700; text-shadow:0 1px 0 #000; }
+.r0d0, .r0d2, .r1d0, .r1d2, .r2d0, .r2d2, .ui_close { background-image:url(chrome_s.png); background-repeat:no-repeat; }
+.r0d0 { width:5px; height:26px; background-position: -46px -8px; }/*左上*/
+.r0d2 { width:5px; height:26px; background-position: -53px -8px; }/*右上*/
+.r1d0 { background-position:-60px 0; background-repeat:repeat-y; }/*左边*/
+.r1d2 { background-position:-65px 0; background-repeat:repeat-y; }/*右边*/
+.r2d0 { width:5px; height:5px; background-position: -46px -2px;}/*左下*/
+.r2d2 { width:5px; height:5px; background-position: -53px -2px;}/*右下*/
+.ui_close { top:1px; right:12px; _right:6px; width:44px; height:17px; background-position:0 0; _font-size:0; _line-height:0; text-indent:-9999em; }
+.ui_close:hover { background-position:0 -18px; }
+.r0d1, .r2d1 { background-image:url(border.png); background-repeat:repeat-x; }
+.r0d1 { background-position:0 top; }
+.r2d1 { background-position: 0 bottom; }
+.ui_btns { background-color:#F6F6F6; border-top:solid 1px #DADEE5; font-size:12px; }
+.ui_btns span, .ui_btns button { background-color:transparent; background-image:url(btns.png); background-repeat:no-repeat; }
+.ui_btns span { padding:0 0 0 5px; overflow:hidden; background-position:left -42px; }
+.ui_btns button { height:21px; line-height:21px; padding:0 10px 0 5px; max-width:200px; border:none 0; font-size:12px; color:#666; text-shadow:0 1px 0 #FFF; background-position:right 0; }
+.ui_btns span:hover, .ui_btns span.ui_hover { background-position:left -63px; }
+.ui_btns span:hover button, .ui_btns span.ui_hover button{ background-position:right -21px; }
+.ui_resize { width:10px; height:10px; }
+html:hover .ui_btns button:focus { outline:none 0; }
+
+/*
+主题拓展参数[可添加组合在'style'参数中]
+*/
+.ui_dialog_icon { display:inline-block; *zoom:1; *display:inline; background-image:url(icons.png); background-repeat:no-repeat; }
+/*警告消息*/
+.alert .ui_dialog_icon { margin-right:10px; width:48px; height:48px; background-position:0 -96px; }
+/*询问消息*/
+.confirm .ui_dialog_icon { margin-right:10px; width:48px; height:48px; background-position:0 -144px; }
+/*错误消息*/
+.error .ui_dialog_icon { margin-right:10px; width:48px; height:48px; background-position:0 -48px; }
+/*成功消息*/
+.succeed .ui_dialog_icon { margin-right:10px; width:48px; height:48px; background-position:0 0; }
+
+/*无关闭按钮*/
+.noClose .ui_close { display:none; }
+/*无风格*/
+.noSkin .ui_border, .noSkin .ui_title_wrap, .noSkin .ui_dialog_icon { display:none; }
+.noSkin .ui_bottom_wrap { display:none; *display:block; *height:0; overflow:hidden; }
+* html .noSkin .ui_btns { height:0; overflow:hidden; position:absolute; left:-99999em; }
+.noSkin .ui_content { margin:0; }
+.noSkin .ui_dialog_main { background:transparent; }

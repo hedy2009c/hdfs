@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+<import resource="classpath*:com/hdfs/user/config/spring-user.xml" />
+<import resource="classpath*:com/hdfs/file/config/spring-file.xml" />
+
+<!-- 
+	配置文件编写步骤：
+	1.先配置dataSource数据源
+	2.把数据源注入到sessionFactory
+	3.把sessionFactory注入到userDao（此时userDao就具备了sessionFactory的功能，就可以去访问数据库了）
+	4.将Dao注入到Service
+	5.编写控制层action
+ -->
+
+
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+	<property name="url" value="jdbc:mysql://localhost/hdfs?useUnicode=true&amp;characterEncoding=utf8"></property>
+	
+	<property name="username" value="root"></property>
+	<property name="password" value="root"></property>
+	<!-- 
+		连接池配置
+		1.最大连接数（默认最大为100）
+		2.可空闲的连接数（30）
+		3.最大可以等待的连接（500）
+		4.默认的自动提交
+	-->
+	<property name="maxActive" value="100"></property>
+	<property name="maxIdle" value="30"></property>
+	<property name="maxWait" value="500"></property>
+	<property name="defaultAutoCommit" value="true"></property>
+</bean>
+<!-- 
+	会话工厂，将dataSource注入到下面的类中
+ -->
+<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	<property name="dataSource" ref="dataSource"></property>
+	<!-- 
+		配置Hibernate属性
+	 -->
+	<property name="hibernateProperties">
+		<props>
+			<!-- Hibernate方言 -->
+			<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+			<!-- 配置显示SQL语句，开发时打开方便开发，部署时关闭提到点效率 -->
+			<prop key="hibernate.show_sql">true</prop>
+		</props>
+	</property>
+	<!-- HBM映射文件 -->
+	<property name="mappingResources">
+		<list>
+			<value>/com/hdfs/user/bean/Users.hbm.xml</value>
+			<value>/com/hdfs/file/bean/HdfsFile.hbm.xml</value>
+			<value>/com/hdfs/file/bean/HdfsMemory.hbm.xml</value>
+		</list>
+	</property>
+</bean>
+
+
+
+
+	</beans>

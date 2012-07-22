@@ -1,0 +1,62 @@
+.iPhoneCheckContainer {
+  position: relative;
+  height: 17px;
+  cursor: pointer;
+  overflow: hidden; display:inline-block; padding:0; }
+  .iPhoneCheckContainer input {
+    position: absolute;
+    top: 5px;
+    left: 30px;
+    opacity: 0;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); }
+  .iPhoneCheckContainer label {
+    white-space: nowrap;
+    font-size: 8px;
+    line-height: 0px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: block;
+    height: 17px;
+    position: absolute;
+    width: auto;
+    top: 0;
+    padding-top: 0px;
+    overflow: hidden; }
+  .iPhoneCheckContainer, .iPhoneCheckContainer label {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none; }
+
+.iPhoneCheckDisabled {
+  opacity: 0.5;
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50); }
+
+label.iPhoneCheckLabelOn {
+  color: white;
+  background: url('../assets/iphone-style-checkboxes/on.png?1282083753') no-repeat;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
+  padding-top: 0px; width:32px;}
+  label.iPhoneCheckLabelOn span {
+    padding-left: 8px; position:relative; top:-1px;}
+label.iPhoneCheckLabelOff {
+  color: #8b8b8b;
+  background: url('../assets/iphone-style-checkboxes/off.png?1282083753') no-repeat right 0;
+  text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.6);
+  text-align: right;
+  right: 6px; width:32px; }
+  label.iPhoneCheckLabelOff span {
+    padding-right: 8px; position:relative; top:-1px;}
+
+.iPhoneCheckHandle {
+  display: block;
+  height: 17px;
+  cursor: pointer;
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 13px;
+  background: url('../assets/iphone-style-checkboxes/slider.png?1282083753') no-repeat;
+  }

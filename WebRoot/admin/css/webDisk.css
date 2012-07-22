@@ -1,0 +1,75 @@
+
+ul{margin:0px; padding: 0px; list-style: none;}
+a{text-decoration: none; font-size: 12px;}
+
+body{width:100%;height:100%; font-size:12px; color:#999; text-align:center; margin:0px;}
+
+
+#WDheader,#WDbody,#WDfooter{ width: 960px; text-align:left; border:1px solid #ccc; margin:5px auto;}
+#WDheader{ height: 70px; background: url(../images/WDlogo.gif) no-repeat 0px 0px  ;}
+#WDbody{ height:600px; overflow:hidden;}
+#WDfooter{ height: 70px; background: url(../images/wdfooter.jpg) no-repeat 0px 0px  ;}
+
+/*WDcatalogList*/
+.WDlist{ width:100%; height:25px; background: #F6F2F6; }
+#WDcatalogList{ width:200px; height: 600px; overflow:hidden; float:left;  border-right:1px solid #ccc; }
+#WDcatalogList h3{ margin:5px 0px; padding-left:7px;}
+#catalogStruct{ overflow:hidden;}
+#catalogStruct li{ width:100%; height:30px; line-height:30px; padding-left:25px; }
+.collent{ width:16px; height:14px; margin-top:5px; background: url(../images/newicon.gif) no-repeat 0px -295px; display:inline-block; text-indent:400px; overflow:hidden;}
+.catalogName{}
+/*WDcatalogs*/
+#WDcatalogs{ width: 755px;overflow:hidden;float:left; }
+#WDdetail{ width:755px; height:20px; margin:3px 0px; padding:5px 0px; background-color:#F6F2F6;padding-left:5px;}
+#WDdetail span{ float:right;}
+#WDdetail ul{ float:left; width:600px; margin-left:20px;overflow:hidden; zoom:1;}
+#WDpath li{*margin-top:-12px;}
+.filePath{ display:inline-block;float:left; padding-left:16px; background:url(../images/newicon.gif) no-repeat 0px 30px;}
+#WDtoolBar{ width:755px; height:35px; margin:10px 2px; background-color:#F6F2F6; padding:5px 0px; overflow:hidden; zoom:1;}
+#WDtoolBar li{  width:100px; height:30px;  text-align:center; line-height:29px; float:left;  margin:0px 10px; background: url(../images/toolbtn.gif) no-repeat -2px 0px; border-left:1px solid #ccc; border-right:1px solid #ccc;}
+#catalogs{ width:755px; height:600px; overflow:hidden; }
+/*catalogContent*/
+#catalogContent{ height:500px; text-align:center; overflow:auto; zoom:1; padding-left:25px; }
+#catalogContent li{ width:85px; height: 85px;_display:inline; border:1px solid #999; margin:20px 16px; padding:10px 5px 10px 5px; float:left; text-align:center;}
+img{ border:0px;}
+#catalogContent li a{ color:#999;}
+#catalogContent li a:hover{ color:#000;}
+#catalogContent li.curFile{ border:1px solid #000;background:#F6F2F6;}
+.notice{margin:100px auto;}
+/*detailWin*/
+#detailWin{ width:293px; height:145px; position:absolute; z-index:1000; display:none; background:url(../images/detailBg.png) no-repeat; padding:20px 10px 10px 10px; text-align:center;}
+.data{ width:70%; height:145px; border-right:1px dashed #ccc; float:left;}
+.data li{ width:100%; height:20px; overflow:hidden; font-size:12px; line-height:20px; text-align:left;padding-left:10px;}
+.type0{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../images/folder.gif') no-repeat;}
+.type1{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../images/doc.gif') no-repeat;}
+.type2{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../images/txt.gif') no-repeat;}
+.type3{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../images/image.gif') no-repeat;}
+.type4{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../images/exe.gif') no-repeat;}
+.type5{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../images/music.gif') no-repeat;}
+.type6{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../images/rar.gif') no-repeat;}
+.type7{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../images/zip.gif') no-repeat;}
+.type8{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../images/html.gif') no-repeat;}
+.type9{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../images/pdf.gif') no-repeat;}
+.type11{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../imagesundefined.gif') no-repeat;}
+.type11{width:54px; height:54px; padding:2px ;border:1px solid #ccc; float:left; margin:30px 0px 0px 20px; background:url('../images/xls.gif') no-repeat;}
+/*menu*/
+#menu{ width:160px; height:200px; border:1px solid #ccc; overflow:hidden; text-align:left; display:none; position:absolute; z-index:10001; background:#fff;}
+#menu ul{ list-style:none;}
+#menu ul li{ width:100%; height:30px; line-height:30px; font-size:12px; padding-left:10px; border-bottom:1px dashed #ccc; }
+#hideMenu{border:0px; width:40px; height:14px; border:1px solid #999; background:#ccc;}
+/*
+var fileIcon = {
+			"0": './images/folder.gif',
+			"1": './images/doc.gif',
+			"2": './images/txt.gif',
+			"3": './images/image.gif',
+			"4": './images/exe.gif',
+			"5": './images/music.gif',
+			"6": './images/rar.gif',
+			"7": './images/zip.gif',
+			"8": './images/html.gif',
+			"9": './images/pdf.gif',
+			"10": './images/undefined.gif',
+			"11": './images/xls.gif'
+		}
+*/

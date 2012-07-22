@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="user" location="232,9" size="217,793">
+    <action name="login" location="27,35" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="redirect.jsp" />
+      </result>
+      <result name="input">
+        <resourceEdge source="input" routing="0" target="login.jsp" />
+      </result>
+    </action>
+    <action name="adminlogin" location="27,127" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="redirect.jsp" />
+      </result>
+      <result name="input">
+        <resourceEdge source="input" routing="0" target="login.jsp" />
+      </result>
+    </action>
+    <action name="register" location="27,227" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="login.jsp" />
+      </result>
+      <result name="input">
+        <resourceEdge source="input" routing="0" target="register.jsp" />
+      </result>
+    </action>
+    <action name="updateuser" location="27,327" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="user_change_success.jsp" />
+      </result>
+      <result name="error">
+        <resourceEdge source="error" routing="0" target="user_change_failed.jsp" />
+      </result>
+    </action>
+    <action name="userprofile" location="27,427" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="user_profile.jsp" />
+      </result>
+      <result name="error">
+        <resourceEdge source="error" routing="0" target="user_change_failed.jsp" />
+      </result>
+    </action>
+    <action name="userdelete" location="27,527" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="user_delete_success.jsp" />
+      </result>
+      <result name="error">
+        <resourceEdge source="error" routing="0" target="user_delete_fail.jsp" />
+      </result>
+    </action>
+    <action name="modifyuser" location="27,627" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="user_change_success.jsp" />
+      </result>
+      <result name="error">
+        <resourceEdge source="error" routing="0" target="user_changge_fail.jsp" />
+      </result>
+    </action>
+    <action name="listuser" location="27,727" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="user_list.jsp" />
+      </result>
+      <result name="none">
+        <resourceEdge source="none" routing="0" target="user_list_fail.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="test.jsp" path="/test.jsp" location="850,176" size="150,55" />
+  <webResource name="test1.jsp" path="/test1.jsp" location="521,246" size="150,55" />
+  <webResource name="disk.jsp" path="/webDisk/disk.jsp" location="853,55" size="150,55" />
+  <webResource name="error.jsp" path="/error.jsp" location="852,239" size="150,55" />
+  <webResource name="welcome.jsp" path="/user/welcome.jsp" location="854,115" size="150,55" />
+  <webResource name="login.jsp" path="/user/login.jsp" location="-18,226" size="150,55" />
+  <webResource name="register.jsp" path="/user/register.jsp" location="-12,280" size="150,55" />
+  <webResource name="index.jsp" path="/webDisk/index.jsp" location="856,302" size="150,55" />
+  <webResource name="user_change_success.jsp" path="/user/user_change_success.jsp" location="508,348" size="150,55" />
+  <webResource name="user_change_failed.jsp" path="/user/user_change_failed.jsp" location="-14,376" size="150,55" />
+  <webResource name="index.jsp" path="/user/index.jsp" location="857,377" size="150,55" />
+  <webResource name="user_profile.jsp" path="/user/user_profile.jsp" location="522,446" size="150,55" />
+  <webResource name="index.jsp" path="/admin/index.jsp" location="853,586" size="150,55" />
+  <webResource name="login.jsp" path="/admin/login.jsp" location="669,156" size="150,55" />
+  <webResource name="user_delete_success.jsp" path="/admin/user_delete_success.jsp" location="488,529" size="150,55" />
+  <webResource name="user_delete_failed.jsp" path="/admin/user_delete_failed.jsp" location="852,516" size="150,55" />
+  <webResource name="user_change_success.jsp" path="/admin/user_change_success.jsp" location="534,629" size="150,55" />
+  <webResource name="user_changge_failed.jsp" path="/admin/user_changge_failed.jsp" location="852,447" size="150,55" />
+  <webResource name="user_list.jsp" path="/admin/user_list.jsp" location="613,730" size="150,55" />
+  <webResource name="user_list_fail.jsp" path="/admin/user_list_fail.jsp" location="495,784" size="150,55" />
+  <webResource name="user_delete_fail.jsp" path="/admin/user_delete_fail.jsp" location="-2,556" size="150,55" />
+  <webResource name="user_changge_fail.jsp" path="/admin/user_changge_fail.jsp" location="463,684" size="150,55" />
+  <webResource name="redirect.jsp" path="/webDisk/redirect.jsp" location="-4,26" size="150,55" />
+  <webResource name="redirect.jsp" path="/admin/redirect.jsp" location="487,113" size="150,55" />
+</Struts2Diagram>
+

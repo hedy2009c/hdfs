@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>aero</title>
+<link href="aero.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../artDialog.js"></script>
+<style>
+html { height:100%; }
+body { font-size:12px; background:url(../../_demo/bg.jpg) no-repeat center center; }
+</style>
+<script type="text/javascript">
+window.onload = function(){
+	artDialog({content:'您今天看起来太漂亮了！', style:'succeed'}, function(){
+		setTimeout(function(){
+			artDialog({title:' ', content:'达成共识',time:3, lock:true});
+		}, 100);
+	});
+};
+</script>
+</head>
+
+<body>
+</body>
+</html>

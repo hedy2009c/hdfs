@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="file" location="189,10" size="535,998">
+    <action name="listFile" location="83,65" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="disk.jsp" />
+      </result>
+      <result name="fail">
+        <resourceEdge source="fail" routing="0" target="error.jsp" />
+      </result>
+    </action>
+    <action name="mkDir" location="83,170" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="disk.jsp" />
+      </result>
+      <result name="fail">
+        <resourceEdge source="fail" routing="0" target="error.jsp" />
+      </result>
+    </action>
+    <action name="deleteFile" location="83,275" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="disk.jsp" />
+      </result>
+      <result name="fail">
+        <resourceEdge source="fail" routing="0" target="error.jsp" />
+      </result>
+    </action>
+    <action name="renameFile" location="83,380" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="disk.jsp" />
+      </result>
+      <result name="fail">
+        <resourceEdge source="fail" routing="0" target="error.jsp" />
+      </result>
+    </action>
+    <action name="listParentFile" location="83,485" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="disk.jsp" />
+      </result>
+      <result name="fail">
+        <resourceEdge source="fail" routing="0" target="error.jsp" />
+      </result>
+    </action>
+    <action name="uploadFile" location="83,590" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="disk.jsp" />
+      </result>
+      <result name="fail">
+        <resourceEdge source="fail" routing="0" target="error.jsp" />
+      </result>
+    </action>
+    <action name="downLoad" location="328,600" size="150,41">
+      <result name="success" />
+    </action>
+    <action name="Monitor" location="28,678" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="namenode.jsp" />
+      </result>
+      <result name="fail">
+        <resourceEdge source="fail" routing="0" target="error.jsp" />
+      </result>
+    </action>
+    <action name="datanode" location="248,719" size="150,62">
+      <result name="success">
+        <resourceEdge source="success" routing="0" target="datanode.jsp" />
+      </result>
+      <result name="fail">
+        <resourceEdge source="fail" routing="0" target="error.jsp" />
+      </result>
+    </action>
+    <action name="NodesPrint" location="32,816" size="150,41">
+      <result name="xmlMessage" />
+    </action>
+  </package>
+  <webResource name="disk.jsp" path="/webDisk/disk.jsp" location="15,143" size="150,55" />
+  <webResource name="error.jsp" path="/error.jsp" location="758,38" size="150,55" />
+  <webResource name="welcome.jsp" path="/user/welcome.jsp" location="13,917" size="150,55" />
+  <webResource name="login.jsp" path="/user/login.jsp" location="726,880" size="150,55" />
+  <webResource name="register.jsp" path="/user/register.jsp" location="727,950" size="150,55" />
+  <webResource name="namenode.jsp" path="/webDisk/namenode.jsp" location="10,821" size="150,55" />
+  <webResource name="datanode.jsp" path="/webDisk/datanode.jsp" location="725,668" size="150,55" />
+</Struts2Diagram>
+

@@ -1,0 +1,67 @@
+<HTML><HEAD>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+<STYLE type=text/css>
+.titleStyle { BORDER-TOP: #ffffff 1px solid; FONT-SIZE: 9pt; CURSOR: hand; COLOR: #000000; BACKGROUND-COLOR: #6b8fc8 ; background-image: url(../admin/images/bg_3.gif) }
+.contentStyle { FONT-SIZE: 9pt; COLOR: red; BACKGROUND-COLOR: #D6DBF7}
+TD { FONT-SIZE: 12px; COLOR: #000000; LINE-HEIGHT: 16pt }
+A:link { COLOR: #000000; TEXT-DECORATION: none }
+A:active { COLOR: #000000; TEXT-DECORATION: none }
+A:visited { COLOR: #000000; TEXT-DECORATION: none }
+A:hover { COLOR: #ff0000; TEXT-DECORATION: underline }
+</STYLE>
+
+<SCRIPT language=JavaScript>
+<!--
+ var layerTop=15;       //菜单顶边距
+ var layerLeft=20;      //菜单左边距
+ var layerWidth=160;    //菜单总宽
+ var titleHeight=26;    //标题栏高度
+ var contentHeight=150; //内容区高度
+ var stepNo=10;         //移动步数，数值越大移动越慢
+
+ var itemNo=0;runtimes=0;
+ document.write('<span id=itemsLayer style="position:absolute;overflow:hidden;border:1px solid #183789;left:'+layerLeft+';top:'+layerTop+';width:'+layerWidth+';">');
+
+ function addItem(itemTitle,itemContent){
+   itemHTML='<div id=item'+itemNo+' itemIndex='+itemNo+' style="position:relative;left:0;top:'+(-contentHeight*itemNo)+';width:'+layerWidth+';"><table width=100% cellspacing="0" cellpadding="0">'+
+       '<tr><td height='+titleHeight+' onclick=changeItem('+itemNo+') class="titleStyle" align=center>'+itemTitle+'</td></tr>'+
+       '<tr><td height='+contentHeight+' class="contentStyle">'+itemContent+'</td></tr></table></div>';
+   document.write(itemHTML);
+   itemNo++;
+ }
+ //添加菜单标题和内容，可任意多项，注意格式：
+ addItem('<b><font color="#ffffff"><a href="./welcome.jsp" target=main><font color="#ffffff">hadoop网盘</font></a> | <a href="logout.asp" target="_top"><font color="#ffffff">退出</font></a></font></b>','<DIV STYLE="PADDING-LEFT:15px">� <a href=".../webDisk/main.html" target="main">管理文件</a> <BR>� <a href="/hdfs/user/userprofile" target="main">用户资料</a> <br>� <a href="../user_change.jsp" target="main">修改资料</a><br></DIV>');
+ addItem('<b><font color="#ffffff">待定</font></b>','<DIV STYLE="PADDING-LEFT:15px">� <a href="#" target="right">#</a><BR>� <a href="#" target="right">#</a><BR>� <a href="#" target="right">#</a><br></DIV>');
+ addItem('<b><font color="#ffffff">待定</font></b>','<DIV STYLE="PADDING-LEFT:15px">� <a href="#" target="right">#</a><br>� <a href="#" target="right">#</a><br>� <a href="#" target="right">#</a><br>� <a href="#" target="right">#</a><br>� <a href="#" target="right">#</a><br></DIV>');
+ addItem('<b><font color="#ffffff">联系我们</font></b>','<DIV STYLE="PADDING-LEFT:15px">版权所有 SCUT<BR>Powered By：SCUT<BR></DIV>');
+
+ document.write('</span>')
+ document.all.itemsLayer.style.height=itemNo*titleHeight+contentHeight;
+
+ toItemIndex=itemNo-1;onItemIndex=itemNo-1;
+
+ function changeItem(clickItemIndex){
+   toItemIndex=clickItemIndex;
+   if(toItemIndex-onItemIndex>0) moveUp(); else moveDown();
+   runtimes++;
+   if(runtimes>=stepNo){
+   onItemIndex=toItemIndex;
+   runtimes=0;}
+   else
+     setTimeout("changeItem(toItemIndex)",10);
+ }
+
+ function moveUp(){
+   for(i=onItemIndex+1;i<=toItemIndex;i++)
+     eval('document.all.item'+i+'.style.top=parseInt(document.all.item'+i+'.style.top)-contentHeight/stepNo;');
+ }
+
+ function moveDown(){
+   for(i=onItemIndex;i>toItemIndex;i--)
+     eval('document.all.item'+i+'.style.top=parseInt(document.all.item'+i+'.style.top)+contentHeight/stepNo;');
+ }
+ changeItem(0);
+//-->
+</SCRIPT>
+
+</HEAD></HTML>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<package name="user" namespace="/user" extends="struts-default">	
+
+		<action name="login" class="userAction" method="login">
+			<result name="success">/webDisk/redirect.jsp</result>
+			<result name="input">/user/login.jsp</result>
+		</action>
+		<action name="adminlogin" class="userAction" method="adminlogin">
+			<result name="success">/admin/redirect.jsp</result>
+			<result name="input">/admin/login.jsp</result>
+		</action>
+		<action name="register" class="userAction" method="register">
+			<result name="success">/user/login.jsp</result>
+			<result name="input">/user/register.jsp</result>
+		</action>
+		<action name="updateuser" class="userAction" method="update">
+			<result name="success">/user/user_change_success.jsp</result>
+			<result name="error">/user/user_change_failed.jsp</result>
+		</action>
+		<action name="userprofile" class="userAction" method="userprofile">
+			<result name="success">/user/user_profile.jsp</result>
+			<result name="error">/user/user_change_failed.jsp</result>
+		</action>
+		<action name="userdelete" class="userAction" method="deleteuser">
+			<result name="success">/admin/user_delete_success.jsp</result>
+			<result name="error">/admin/user_delete_fail.jsp</result>
+		</action>
+		<action name="modifyuser" class="userAction" method="modifyuser">
+			<result name="success">/admin/user_change_success.jsp</result>
+			<result name="error">/admin/user_changge_fail.jsp</result>
+		</action>
+		<action name="listuser" class="listUserAction">
+		       <result name="success">/admin/user_list.jsp</result>
+		       <param name="entity">com.ssh.bean.Users</param>
+		       <param name="fields">userId,username,password,email,phone,memoryId</param>
+		       <result name="none">/admin/user_list_fail.jsp</result>
+		<param name="rows">5</param>
+		</action>
+		
+	</package>
+	
+</struts>

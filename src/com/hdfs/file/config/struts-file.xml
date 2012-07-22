@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<package name="file" namespace="/file" extends="struts-default">	
+
+			<action name="listFile" class="fileAction" method="dolistFile">
+			<result name="success" >
+				/webDisk/disk.jsp
+			</result>
+			<result name="fail">
+				/error.jsp
+			</result>
+		</action>
+		
+		
+		<action name="mkDir" class="fileAction" method="domkDir">
+			<result name="success" >
+				/webDisk/disk.jsp
+			</result>
+			<result name="fail">
+				/error.jsp
+			</result>
+		</action>
+
+     	<action name="deleteFile" class="fileAction" method="deleteFile">
+		<result name="success" >
+			/webDisk/disk.jsp
+		</result>
+		<result name="fail">
+			/error.jsp
+		</result>
+		</action>
+		
+		<action name="renameFile" class="fileAction" method="renameFile">
+			<result name="success" >
+				/webDisk/disk.jsp
+			</result>
+			<result name="fail">
+				/error.jsp
+			</result>
+		</action>
+		
+		<action name="listParentFile" class="fileAction" method="listParentFile">
+			<result name="success" >
+				/webDisk/disk.jsp
+			</result>
+			<result name="fail">
+				/error.jsp
+			</result>
+		</action>
+		
+		
+		<action name="uploadFile" class="fileAction" method="uploadFile">
+			<result name="success" >
+				/webDisk/disk.jsp
+			</result>
+		    <result name="fail">
+				/error.jsp
+		    </result>
+		</action>
+
+		<action name="downLoad" class="fileAction" method="downLoad">
+		     <result type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${filename}"</param>
+				<param name="bufferSize">4096</param>
+      		 </result>
+  		 </action>
+		
+		<action name="Monitor" class="monitorAction" method="nameNode">
+			<result name="success" >
+				/webDisk/namenode.jsp
+			</result>
+			<result name="fail">
+				/error.jsp
+			</result>
+		</action>
+		
+		<action name="datanode" class="monitorAction" method="dataNode">
+			<result name="success" >
+				/webDisk/datanode.jsp
+			</result>
+			<result name="fail">
+				/error.jsp
+			</result>
+		</action>
+		
+		<action name="NodesPrint" class="fileAction" method="nodeprint">
+			<result name="xmlMessage" type="plainText"></result>
+    	</action>
+	</package>
+	
+	
+
+</struts>

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>chrome</title>
+<link href="chrome.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../artDialog.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	artDialog({content:'您今天看起来太漂亮了！', style:'succeed'}, function(){
+		setTimeout(function(){
+			artDialog({title:' ', content:'达成共识',time:3, lock:true});
+		}, 100);
+	});
+};
+</script>
+<style>
+body { font-size:12px; }
+</style>
+</head>
+
+<body>
+    <div style="margin:auto; padding-top:200px;">
+      <select>
+        <option>本主题支持遮盖IE6浏览器的下拉控件</option>
+      </select>
+    </div>
+
+</body>
+</html>
