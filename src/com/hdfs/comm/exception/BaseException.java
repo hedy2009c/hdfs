@@ -26,6 +26,7 @@ public class BaseException extends Exception{
 		super(cause);
 	}
 	
+	@Override
 	public void printStackTrace(PrintStream s) {
         synchronized (s) {
             s.println(this);
@@ -34,7 +35,8 @@ public class BaseException extends Exception{
         }
     }
  
-    public void printStackTrace(PrintWriter s) { 
+    @Override
+	public void printStackTrace(PrintWriter s) { 
         synchronized (s) {
             s.println(this);
             StackTraceElement[] trace = getStackTrace();

@@ -1,9 +1,9 @@
 package com.hdfs.file.dao;
 
 import java.util.List;
+
 import com.hdfs.file.bean.HdfsFile;
 import com.hdfs.file.bean.HdfsMemory;
-import com.hdfs.user.bean.Users;
 
 
 

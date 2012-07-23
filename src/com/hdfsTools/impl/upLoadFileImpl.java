@@ -18,7 +18,7 @@ import com.hdfsTools.dao.upLoadFile;
 
 
 /**
- * 文件上传的实现类
+ * 锟侥硷拷锟较达拷锟斤拷实锟斤拷锟斤拷
  * @author rongjianping
  *
  */
@@ -29,6 +29,7 @@ public class upLoadFileImpl implements upLoadFile{
 	 * @param localFile example /docs/1400-8.txt
 	 * @param hdfsFile  example hdfs://localhost/user/tom/1400-8.txt
 	 */
+	@Override
 	public int simpleUpLoad(String localFile, String hdfsFile) {
 
 		try{	
@@ -36,6 +37,7 @@ public class upLoadFileImpl implements upLoadFile{
 		Configuration conf = new Configuration();
 		FileSystem fs = FileSystem.get(URI.create(hdfsFile), conf);
 		OutputStream out = fs.create(new Path(hdfsFile), new Progressable() {
+		@Override
 		public void progress() {
 		System.out.print(".");
 		}
@@ -44,7 +46,7 @@ public class upLoadFileImpl implements upLoadFile{
 		IOUtils.closeStream(in);
 		return 1;
 		}catch (IOException e){
-			System.out.println("发生了IO异常");
+			System.out.println("锟斤拷锟斤拷锟斤拷IO锟届常");
 			return 0;
 		}finally {
 			

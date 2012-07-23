@@ -6,15 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import com.opensymphony.xwork2.ActionContext;
-
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.SessionAware;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.util.JSONUtils;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.hdfs.comm.util.BaseAction;
 import com.hdfs.comm.util.JsonUtil;
@@ -23,12 +21,8 @@ import com.hdfs.file.bean.HdfsFile;
 import com.hdfs.file.bean.HdfsMemory;
 import com.hdfs.file.service.fileService;
 import com.hdfs.user.bean.Users;
-import com.hdfs.file.bean.HdfsMemory;
 import com.hdfs.user.service.userService;
 import com.opensymphony.xwork2.ActionContext;
-
-import net.sf.json.JSONObject;
-import net.sf.json.util.JSONUtils;
 
 public class userAction extends BaseAction implements ServletRequestAware,
 		SessionAware {
@@ -233,7 +227,7 @@ public class userAction extends BaseAction implements ServletRequestAware,
 		user.setRootDirectory(rootId);
 		this.user = this.userservice.save(user);
 		System.out.println(user.getUsername() + "    " + user.getUserId());
-		fileservice.rootmkdir((long) 47, user.getUsername(), user.getUserId()
+		fileservice.rootmkdir(47, user.getUsername(), user.getUserId()
 				.longValue(), Long.parseLong(rootId));
 		HdfsMemory memory = fileservice.insertMemory(user.getUserId(), 2);
 		user.setMemoryId(memory.getMemoryId());

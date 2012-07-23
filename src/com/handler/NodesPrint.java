@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
+
 import com.dao.DaoTest;
 import com.dao.Nodes;
 public class NodesPrint{

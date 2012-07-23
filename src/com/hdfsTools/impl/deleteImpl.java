@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.fs.permission.FsPermission;
 
 import com.hdfsTools.dao.deleteDao;
 
@@ -13,7 +12,7 @@ public class deleteImpl implements deleteDao{
 
 	@Override
 	public boolean deleteFile(Configuration conf, String fileUrl) throws IOException {
-		FileSystem fs = FileSystem.get(conf);//»ñµÃÎÄ¼þÏµÍ³ÊµÀý
+		FileSystem fs = FileSystem.get(conf);//ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ÏµÍ³Êµï¿½ï¿½
 		Path srcPath = new Path(fileUrl);
 		System.out.println("deleteing the file:"+fileUrl);		
 		//FsPermission f=new FsPermission((short) (4));
@@ -25,7 +24,7 @@ public class deleteImpl implements deleteDao{
 	@Override
 	public boolean deleteDirector(Configuration conf, String directorUrl)
 			throws IOException {
-	    FileSystem fs = FileSystem.get(conf);//»ñµÃÎÄ¼þÏµÍ³ÊµÀý
+	    FileSystem fs = FileSystem.get(conf);//ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ÏµÍ³Êµï¿½ï¿½
 		Path srcPath = new Path(directorUrl);
 		System.out.println("deleteing the file:"+directorUrl);
 		return  fs.delete(srcPath, true);

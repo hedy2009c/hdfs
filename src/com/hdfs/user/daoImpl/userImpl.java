@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.hdfs.comm.util.BaseDao;
-import com.hdfs.comm.util.pathToId;
 import com.hdfs.user.bean.Users;
 import com.hdfs.user.dao.userDao;
 
@@ -16,22 +15,25 @@ import com.hdfs.user.dao.userDao;
 public class userImpl extends BaseDao implements userDao{
 	
 
+	@Override
 	public void updateUser(Users user) {
 		this.getHibernateTemplate().update(user);
 		System.out.println("ok");
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Users> findAllUsers() {
 		String hql = "from Users";
 		//users order by users.id desc";
-		return (List<Users>)this.getHibernateTemplate().find(hql);
+		return this.getHibernateTemplate().find(hql);
 	}
 	
 	/**
 	 * 根据用户的Id来查询用户的信息。
 	 * 返回符合要求的具有完整信息的用户
 	 */
+	@Override
 	public Users find(Users user)
 	{
 		 Session session=this.getSession();
@@ -54,6 +56,7 @@ public class userImpl extends BaseDao implements userDao{
 		  return newuser;
 	}
 	
+	@Override
 	public Users findid(int userid)
 	{
 		 Session session=this.getSession();
@@ -75,6 +78,7 @@ public class userImpl extends BaseDao implements userDao{
 		  
 		  return newuser;
 	}
+	@Override
 	public Users findByName(Users user)
 	{
 		 Session session=this.getSession();
@@ -97,6 +101,7 @@ public class userImpl extends BaseDao implements userDao{
 		 return newuser;
 	}
 
+	@Override
 	public Users findUsersById(Users user) {
 
 		  Session session=this.getSession();
@@ -122,11 +127,13 @@ public class userImpl extends BaseDao implements userDao{
 		  
 		  
 		}
+	@Override
 	public void removeUsers(Users users) {
 
 		this.getHibernateTemplate().delete(users);
 	}
 
+	@Override
 	public Users saveUsers(Users user) {
 		Session session=this.getSession();
 		String Hql="select count(*) from Users user where user.username=:username";

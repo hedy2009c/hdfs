@@ -26,7 +26,6 @@ import com.hdfs.file.bean.dillResult;
 import com.hdfs.file.dao.fileDao;
 import com.hdfs.file.service.fileService;
 import com.hdfs.user.dao.userDao;
-import com.hdfs.user.bean.Users;
 import com.hdfsTools.action.createAction;
 import com.hdfsTools.action.deleteAction;
 import com.hdfsTools.action.downLoadAction;
@@ -96,6 +95,7 @@ public class fileServiceImpl implements fileService{
 		
 	}
 	
+	@Override
 	public List<HdfsFile> listAllFile() {
 		List<HdfsFile> fileList=filedao.listAllFile();
 		return fileList;
@@ -143,6 +143,7 @@ public class fileServiceImpl implements fileService{
 		
 	}
 	
+@Override
 public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) throws IOException {
 		
 		String parentPath=filedao.getFileUrl(parentId);//获取父目录的id
@@ -390,6 +391,7 @@ public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) t
 		return returnIn;
 	}
 
+	@Override
 	public HdfsMemory insertMemory(int userId,int type) {
 		// TODO Auto-generated method stub
 		int total = 0;
@@ -402,6 +404,7 @@ public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) t
 		
 	} 
 	
+	@Override
 	public void changeMemory(int memoryId,int type){
 		int total = 0;
 		if (type == 2) total = 1000000;
@@ -410,15 +413,18 @@ public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) t
 		filedao.updateMemory(memory);
 	}
 	
+	@Override
 	public void updateMemory(HdfsMemory memory){
 		filedao.updateMemory(memory);
 	}
 	
 	
+	@Override
 	public void deleteMemory(int memoryId){
 		filedao.deleteMemory(memoryId);
 	}
 	
+	@Override
 	public HdfsMemory getMemory(int memoryId){
 		return filedao.getMemory(memoryId);
 	}

@@ -1,8 +1,15 @@
 package com.hdfs.file.action;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,9 +18,9 @@ import org.apache.struts2.ServletActionContext;
 import com.hdfs.comm.util.BaseAction;
 import com.hdfs.file.bean.HdfsFile;
 import com.hdfs.file.bean.HdfsMemory;
-import com.hdfs.user.bean.Users;
 import com.hdfs.file.bean.dillResult;
 import com.hdfs.file.service.fileService;
+import com.hdfs.user.bean.Users;
 import com.hdfs.user.service.userService;
 
 public class fileAction extends BaseAction {

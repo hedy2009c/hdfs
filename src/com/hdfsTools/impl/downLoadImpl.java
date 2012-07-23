@@ -15,6 +15,7 @@ public class downLoadImpl implements downLoadDao{
 	/**
 	 *  Copy FileSystem files to local files.
 	 */
+	@Override
 	public boolean copyFileFromFs(Configuration conf, String src, File dst,
 			boolean deleteSource) throws IOException {
 		FileSystem fs = FileSystem.get(conf);//初始化文件系统

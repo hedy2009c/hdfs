@@ -1,13 +1,9 @@
 package com.hdfs.file.daoImpl;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -16,10 +12,10 @@ import com.hdfs.comm.util.BaseDao;
 import com.hdfs.file.bean.HdfsFile;
 import com.hdfs.file.bean.HdfsMemory;
 import com.hdfs.file.dao.fileDao;
-import com.hdfs.user.bean.Users;
 
 public class fileImpl extends BaseDao implements fileDao {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<HdfsFile> listFile(long currentId, long userId) {
 
@@ -49,12 +45,13 @@ public class fileImpl extends BaseDao implements fileDao {
 		return fileList;
 	}
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<HdfsFile> listAllFile() {
 
 		String hql = "from HdfsFile";
 		//users order by users.id desc";
-		return (List<HdfsFile>)this.getHibernateTemplate().find(hql);
+		return this.getHibernateTemplate().find(hql);
 		
 	}
 	@Override
@@ -84,6 +81,7 @@ public class fileImpl extends BaseDao implements fileDao {
 		}
 	}
 
+	@Override
 	public boolean insertMemory(HdfsMemory memory) {
 		Session session = this.getSession();
 		try {
@@ -97,6 +95,7 @@ public class fileImpl extends BaseDao implements fileDao {
 		}
 	}
 
+	@Override
 	public HdfsMemory saveMemory(HdfsMemory memory) {
 		/*
 		 * Session session=this.getSession(); StringHql=
@@ -135,6 +134,7 @@ public class fileImpl extends BaseDao implements fileDao {
 		}
 	}
 
+	@Override
 	public HdfsMemory findMemory(int memoryId) {
 		HdfsMemory memory = new HdfsMemory();
 		Session session = this.getSession();
@@ -144,6 +144,7 @@ public class fileImpl extends BaseDao implements fileDao {
 	
 	
 	
+	@Override
 	public boolean deleteMemory(int memoryId) {
 		// TODO Auto-generated method stub
 		Session session = this.getSession();
@@ -179,6 +180,7 @@ public class fileImpl extends BaseDao implements fileDao {
 		
 	}
 	
+	@Override
 	public int deleteFilesmem(String startpath){
 		Session session = this.getSession();
 		try {
@@ -259,12 +261,14 @@ public class fileImpl extends BaseDao implements fileDao {
 		return file.getUserId();
 	}*/
 
+	@Override
 	public HdfsMemory getMemory(int memoryId) {
 		Session session = this.getSession();
 		HdfsMemory memory = (HdfsMemory) session.get(HdfsMemory.class, memoryId);
 		return memory;
 	}
 	
+	@Override
 	public HdfsMemory find(long memoryId)
 	{
 		  Session session=this.getSession();
@@ -287,10 +291,12 @@ public class fileImpl extends BaseDao implements fileDao {
 		  return memory;
 	}
 	
+	@Override
 	public void updateMemory(HdfsMemory memory) {
 		this.getHibernateTemplate().update(memory);
 	}
 
+	@Override
 	public boolean setSafeLevel(short level,String filePath){
 		boolean result = false;
 		

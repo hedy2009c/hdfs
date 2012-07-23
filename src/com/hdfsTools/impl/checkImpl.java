@@ -2,7 +2,6 @@ package com.hdfsTools.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
@@ -18,6 +17,7 @@ public class checkImpl implements checkDao{
 	/**
 	 * 获得文件和目录的列表
 	 */
+	@Override
 	public List<FileStatus> doList(String directory, Configuration conf)
 			throws IOException {
 		List<FileStatus> list= new ArrayList <FileStatus>();
@@ -34,6 +34,7 @@ public class checkImpl implements checkDao{
 	/**
 	 * 获得文件列表
 	 */
+	@Override
 	public List<FileStatus> doListFile(String directory, Configuration conf)
 			throws IOException {
 		List<FileStatus> list= new ArrayList <FileStatus>();
@@ -52,6 +53,7 @@ public class checkImpl implements checkDao{
 	/**
 	 *获得目录列表
 	 */
+	@Override
 	public List<FileStatus> doListDirectory(String directory, Configuration conf)
 			throws IOException {
 		List<FileStatus> list= new ArrayList <FileStatus>();

@@ -1,8 +1,10 @@
 package com.hdfs.user.action;
-import java.util.*;
-import com.hdfs.user.bean.*;
-import com.opensymphony.xwork2.ActionSupport;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.hdfs.user.bean.Users;
 import com.hdfs.user.service.userService;
+import com.opensymphony.xwork2.ActionSupport;
 
 public class ListUserAction extends ActionSupport
 {
@@ -20,6 +22,7 @@ public void setUserservice(userService userservice) {
 	this.userservice = userservice;
 }
 
+@Override
 public String execute() throws Exception
 {
 	//Session session=HibernateSessionFactory.getSession();

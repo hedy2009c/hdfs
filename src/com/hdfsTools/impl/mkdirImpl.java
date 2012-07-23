@@ -10,9 +10,10 @@ import com.hdfsTools.dao.mkdirDao;
 
 public class mkdirImpl implements mkdirDao{
 
+	@Override
 	public  boolean createDir(Configuration conf,String dirUrl)throws IOException{
 
-		FileSystem fs = FileSystem.get(conf);//»ñµÃÎÄ¼þÏµÍ³ÊµÀý
+		FileSystem fs = FileSystem.get(conf);//ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ÏµÍ³Êµï¿½ï¿½
 		Path dirPath = new Path(dirUrl);
 		return fs.mkdirs(dirPath);
 		

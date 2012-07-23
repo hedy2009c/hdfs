@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONNull;
@@ -18,6 +16,8 @@ import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 import net.sf.json.util.JSONUtils;
 import net.sf.json.xml.XMLSerializer;
+
+import org.apache.log4j.Logger;
 
 public class JsonUtil {
 	

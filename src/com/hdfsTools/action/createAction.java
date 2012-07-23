@@ -3,8 +3,6 @@ package com.hdfsTools.action;
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.permission.FsPermission;
-import org.apache.hadoop.hdfs.DFSClient;
 
 import com.hdfsTools.dao.mkdirDao;
 import com.hdfsTools.impl.mkdirImpl;
