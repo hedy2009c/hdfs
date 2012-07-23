@@ -13,7 +13,7 @@ public class mkdirImpl implements mkdirDao{
 	@Override
 	public  boolean createDir(Configuration conf,String dirUrl)throws IOException{
 
-		FileSystem fs = FileSystem.get(conf);//����ļ�ϵͳʵ��
+		FileSystem fs = FileSystem.get(conf);//获得文件系统实例
 		Path dirPath = new Path(dirUrl);
 		return fs.mkdirs(dirPath);
 		

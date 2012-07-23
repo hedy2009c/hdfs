@@ -18,7 +18,7 @@ import com.hdfsTools.dao.upLoadFile;
 
 
 /**
- * �ļ��ϴ���ʵ����
+ * 文件上传的实现类
  * @author rongjianping
  *
  */
@@ -46,7 +46,7 @@ public class upLoadFileImpl implements upLoadFile{
 		IOUtils.closeStream(in);
 		return 1;
 		}catch (IOException e){
-			System.out.println("������IO�쳣");
+			System.out.println("发生了IO异常");
 			return 0;
 		}finally {
 			
