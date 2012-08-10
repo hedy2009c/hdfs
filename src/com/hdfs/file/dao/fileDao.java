@@ -68,6 +68,9 @@ public interface fileDao {
 	public HdfsMemory find (long memoryId);
 	
 	public int deleteFilesmem(String startpath);
+
+	public void updateEncrypt_DataKey(HdfsFile hdfsFile,
+			byte[] encryptedDataSecretKey);
 	
 	
 }

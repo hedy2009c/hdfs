@@ -24,6 +24,15 @@ public class HdfsFile implements java.io.Serializable {
 	private Integer safeLevel;
 	private int type;
 	private long userId;
+	private byte[] encryptDataKey;
+
+	public byte[] getEncryptDataKey() {
+		return encryptDataKey;
+	}
+
+	public void setEncryptDataKey(byte[] encryptDataKey) {
+		this.encryptDataKey = encryptDataKey;
+	}
 
 	public HdfsFile() {
 	}
@@ -43,7 +52,7 @@ public class HdfsFile implements java.io.Serializable {
 	public HdfsFile(long fileId, String fileName, long parentid, Long size,
 			String fileUrl, Date createTime, Date modifiedTime,
 			Integer safeLevel, Integer timing, Integer importantLevel,
-			Integer fsId, int type, Long userId) {
+			Integer fsId, int type, Long userId, byte[] encryptDataKey ) {
 		this.fileId = fileId;
 		this.fileName = fileName;
 		this.parentid = parentid;
@@ -54,6 +63,7 @@ public class HdfsFile implements java.io.Serializable {
 		this.safeLevel = safeLevel;
 		this.type = type;
 		this.userId = userId;
+		this.encryptDataKey = encryptDataKey;
 	}
 
 	public long getFileId() {

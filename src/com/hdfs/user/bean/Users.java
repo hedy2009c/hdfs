@@ -16,6 +16,7 @@ public class Users implements java.io.Serializable {
 	private Integer memoryId;
 	private Integer role;
 	private String rootDirectory;
+	private String publicKey;
 
 	// Constructors
 
@@ -119,6 +120,14 @@ public class Users implements java.io.Serializable {
 
 	public void setRootDirectory(String rootDirectory) {
 		this.rootDirectory = rootDirectory;
+	}
+
+	public String getPublicKey() {
+		return publicKey;
+	}
+
+	public void setPublicKey(String publicKey) {
+		this.publicKey = publicKey;
 	}
 
 }

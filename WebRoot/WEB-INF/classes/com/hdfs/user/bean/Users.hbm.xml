@@ -33,5 +33,8 @@
                 <comment>用户对应的根目录，对应于directory里面的目录</comment>
             </column>
         </property>
+        <property name="publicKey" type="java.lang.String">
+        	<column name="public_key" length="20"></column>
+        </property>
     </class>
 </hibernate-mapping>

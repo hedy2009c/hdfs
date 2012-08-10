@@ -302,6 +302,21 @@ public class fileImpl extends BaseDao implements fileDao {
 		
 		return result;
 	}
+
+	@Override
+	public void updateEncrypt_DataKey(HdfsFile hdfsFile,
+			byte[] encryptedDataSecretKey) {
+		
+		Session session=this.getSession();
+		Transaction trans=session.beginTransaction();
+		String hql="update HdfsFile hdfsFile set hdfsFile.encryptDataKey=:encryptDataKey where hdfsFile.fileId=:fileId";
+		Query queryupdate=session.createQuery(hql);
+		queryupdate.setBinary("encryptDataKey", encryptedDataSecretKey);
+		queryupdate.setLong("fileId", hdfsFile.getFileId());
+		int ret=queryupdate.executeUpdate();
+		trans.commit();
+		
+	}
 	
 	
 }

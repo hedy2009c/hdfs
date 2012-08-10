@@ -4,19 +4,29 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.KeyPair;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+
 import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
 
+import com.encryption.DesEncrypter;
+import com.encryption.RSAEncrypter;
 import com.hdfs.comm.util.fileUtil;
 import com.hdfs.comm.util.pathToId;
 import com.hdfs.file.bean.HdfsFile;
@@ -25,6 +35,7 @@ import com.hdfs.file.bean.checkFile;
 import com.hdfs.file.bean.dillResult;
 import com.hdfs.file.dao.fileDao;
 import com.hdfs.file.service.fileService;
+import com.hdfs.user.bean.Users;
 import com.hdfs.user.dao.userDao;
 import com.hdfsTools.action.createAction;
 import com.hdfsTools.action.deleteAction;
@@ -36,6 +47,7 @@ import com.hdfsTools.action.upLoadAction;
 public class fileServiceImpl implements fileService{
 	public fileDao filedao;
 	public userDao userdao;
+	
 	public userDao getUserdao() {
 		return userdao;
 	}
@@ -131,7 +143,6 @@ public class fileServiceImpl implements fileService{
 		hdfsfile.setCreateTime(new Date());
 		hdfsfile.setModifiedTime(new Date());
 		
-			System.out.println(newfile);
 			boolean result=filedao.insertFile(hdfsfile);//保存文件
 			 createAction caction=new  createAction();
 			 caction.createDir(newfile);//操作文件系统
@@ -292,7 +303,6 @@ public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) t
 		long size = file.length()/1024; 	//获取所上传的文件的大小（kb)
 		memory.setMemoryused((int) (memory.getMemoryused()+size));	//更新已使用的空间
 		filedao.updateMemory(memory);	//实际更新已使用的空间
-		System.out.println("文件大小："+size);
 		
 		HdfsFile newfile=new HdfsFile(); 	//建立HdfsFile对象，用于写入数据库
 		dillResult resultReturn=new dillResult(); 	//建立dillResult不知有何用
@@ -302,11 +312,10 @@ public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) t
 		 */
 		HdfsFile dfsfile=filedao.findFile(currentId);
 		String dst=dfsfile.getFileUrl();	//获得当前目录的url
-		System.out.println("目标地址："+dst);
+
 		
 		upLoadAction upAction=new upLoadAction();
-		System.out.println("源文件地址"+file);
-		System.out.println("目标文件名字"+ filename);
+
 		boolean result=upAction.copytoDFS(file, dst,true,filename,safelevel);
 		
 		if(result){
@@ -334,21 +343,13 @@ public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) t
 		}
 		System.out.println("result------>"+result);
 		if(result){
-			System.out.println("fileId:"+ newfile.getFileId());
-			System.out.println("fileName:"+ newfile.getFileName());
-			System.out.println("parentid:" + newfile.getParentid());
-			System.out.println("size:" + newfile.getSize());
-			System.out.println("fileUrl:" + newfile.getFileUrl());
-			System.out.println("createTime:" + newfile.getCreateTime());
-			System.out.println("modifiedTime:" + newfile.getModifiedTime());
-			System.out.println("deadline:"+ newfile.getDeadline());
-			System.out.println("safeLevel:" + newfile.getSafeLevel());
-			System.out.println("type:" + newfile.getType());
-			System.out.println("userId:" + newfile.getUserId());
+			
 			String listfile=listFile(newfile.getParentid(), newfile.getUserId());
 			resultReturn.setWddescjson(listfile);
 			resultReturn.setUserId(newfile.getUserId());
 			resultReturn.setParentid(newfile.getParentid());
+			resultReturn.setFileId(newfile.getFileId());
+			
 
 		}
 		return resultReturn;
@@ -380,15 +381,24 @@ public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) t
    }
 
 	@Override
-	public InputStream downLoad(long fileId) throws IOException {
+	public File downLoad(long fileId) throws IOException {
+		/*
+		 *从数据库中找到fileId对应的HdfsFile记录 
+		 *用来获取该文件存放在hdfs文件系统的路径
+		 */
 		HdfsFile dfsfile=filedao.findFile(fileId);
+		
 		String tmpFile="tmp"+fileId;//构造临时文件夹
 		File dst =new File("E:/hadoop/temp"+tmpFile);//建立临时的文件
+		
+		/*
+		 * 从hdfs文件系统下载文件到tomcat服务器临时文件dst
+		 */
 		downLoadAction down =new downLoadAction();
 		down.copyFileFromFs(dfsfile.getFileUrl(), dst, false);
-		FileInputStream returnIn=new FileInputStream(dst);
+		
 		dst.deleteOnExit();
-		return returnIn;
+		return dst;
 	}
 
 	@Override
@@ -427,5 +437,149 @@ public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) t
 	@Override
 	public HdfsMemory getMemory(int memoryId){
 		return filedao.getMemory(memoryId);
+	}
+
+	@Override
+	public boolean isPublicKeyEmpty(Users user) {
+		return userdao.isPublicKeyEmpty(user);
+	}
+
+	@Override
+	public void generatePublicKey(Users user) {
+		try {
+		RSAEncrypter encrypt = new RSAEncrypter(); 
+        
+		// Generate keys   
+        KeyPair keyPair = encrypt.generateKey();   
+        
+        /*
+         * 创建以用户ID为名的文件夹
+         * 在该文件夹下保存公钥和私钥文件
+         */
+
+		String dir = "D:/hdfs/"+user.getUserId().toString();
+        File directory = new File(dir);
+		
+        System.out.println(directory.mkdirs());
+        
+        encrypt.saveKey(keyPair, dir+"/publicKey",   dir+"/privateKey");
+        
+        /*
+         *  保存公钥的url到users表中的publicKey字段
+         */
+        userdao.updateUserPublicKey(user,dir+"/publicKey");
+        
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public byte[] encryptFile(long userId, File uploadFile) {
+		byte[] encryptedDataSecretKey = null;
+		/*
+		 * 生成DES密钥
+		 * 加密文件
+		 */
+		// Generate a temporary key. In practice, you would save this key.
+        // See also Encrypting with DES Using a Pass Phrase.
+        SecretKey key;
+		try {
+        key = KeyGenerator.getInstance("DES").generateKey();
+
+		// Create encrypter/decrypter class
+        DesEncrypter encrypter = new DesEncrypter(key);
+        // Encrypt
+        File encryptedFile = new File(uploadFile.getAbsolutePath()+".des");
+        encrypter.encrypt(new FileInputStream(uploadFile), new FileOutputStream(encryptedFile));
+        
+        /*
+         * 利用公钥加密DES密钥
+         */
+        //从文件中加载公钥
+        RSAEncrypter encrypt = new RSAEncrypter();
+        String publicKeyPath = "D:/hdfs/"+userId+"/publicKey";
+        RSAPublicKey publicKey = (RSAPublicKey) encrypt.loadKey(publicKeyPath, 1);
+        encryptedDataSecretKey = encrypt.encrypt(publicKey, key.getEncoded());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return encryptedDataSecretKey;
+	}
+
+	@Override
+	public void storeEncryptDataKey(long fileId, byte[] encryptedDataSecretKey) {
+		/*
+		 * 找到fileId对应的HdfsFile记录
+		 */
+		HdfsFile hdfsFile = filedao.findFile(fileId);
+		filedao.updateEncrypt_DataKey(hdfsFile, encryptedDataSecretKey);
+		
+	}
+
+	@Override
+	public boolean isEncryptFile(long fileId) {
+		HdfsFile dfsfile=filedao.findFile(fileId);
+		if (dfsfile.getEncryptDataKey()==null) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	
+	}
+
+	@Override
+	public InputStream decryptFile(File privateKey, long fileId, File file) {
+		
+		/*
+		 * 创建RSAEncrypter对象
+		 */
+		 RSAEncrypter encrypter = new RSAEncrypter();
+		/*
+		 * 加载私钥
+		 */
+		 String privateKeyPath = privateKey.getAbsolutePath();
+	     
+		 RSAPrivateKey pKey = (RSAPrivateKey) encrypter.loadKey(privateKeyPath, 0);
+		/*
+		 * 获取fileId对应的已加密数据密钥
+		 */
+	     HdfsFile dfsfile=filedao.findFile(fileId);
+	     byte[] encryptDataKey = dfsfile.getEncryptDataKey();
+	     
+
+		/*
+		 * RSAEncrypter 对象调用解密模块，解密已加密的数据密钥
+		 */
+		byte[] dataKey=encrypter.decrypt(pKey, encryptDataKey);
+
+
+		/*
+		 * 根据数据密钥，构造DesEncrypter对象
+		 */
+		// Create encrypter/decrypter class
+		SecretKeySpec key = new SecretKeySpec(dataKey, "DES");
+		
+        DesEncrypter decrypter = new DesEncrypter(key);
+
+		/*
+		 * DesEncrypter对象调用解密模块，解密出原始文件
+		 */
+        File decryptedFile = new File(file.getAbsolutePath()+".dec");
+        InputStream in = null;
+        try {
+			decrypter.decrypt(new FileInputStream(file), new FileOutputStream(decryptedFile));
+		/*
+		 *返回封装了原始文件的输入流
+		 */
+		in = new  FileInputStream(decryptedFile);
+
+        } catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return in;
 	}
 }

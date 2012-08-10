@@ -77,21 +77,6 @@ $(function(){
 						
 					}
 				);
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			},
 			removeFile: function(event){
 			var fileId = $('.curFile').attr('fileId');

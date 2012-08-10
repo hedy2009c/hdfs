@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.hdfs.comm.util.BaseDao;
@@ -139,12 +140,14 @@ public class userImpl extends BaseDao implements userDao{
 		String Hql="select count(*) from Users user where user.username=:username";
         Query query=session.createQuery(Hql);
         query.setString("username", user.getUsername());
+        //查询是否存在username的用户
         long result=(Long)query.uniqueResult();
      try
         {
            if(result==0)
            {
         	   
+        	   //利用模板对用户表的记录进行添加
         	  this.getHibernateTemplate().save(user);
         	  return user;
         }
@@ -153,7 +156,6 @@ public class userImpl extends BaseDao implements userDao{
         	 return null;  
            }
         	  
-        	   
         }
         catch(Exception e)
         {
@@ -163,11 +165,53 @@ public class userImpl extends BaseDao implements userDao{
         {
         session.close();
         }
-      
+     
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean isPublicKeyEmpty(Users  user) {
+		
+		System.out.println("11");
+		Session session=this.getSession();
+		String Hql="select publicKey from Users user where user.userId=:userId";
+        Query query=session.createQuery(Hql);
+        query.setInteger("userId", user.getUserId());
+        
+        System.out.println("11");
 
+        List<String> list = query.list();
+        System.out.println("11");
+        try {
+        for(String str : list){
+            if (str!=null) {
+            	return false;
+            }
+        }
+		
+        } catch(Exception e)
+        {
+        	e.printStackTrace();
+        }
+        finally
+        {
+        session.close();
+        }
+        System.out.println("11");
+        return true;
+	}
 
-
+	@Override
+	public void updateUserPublicKey(Users user,String publicKeyUrl) {
+		Session session=this.getSession();
+		Transaction trans=session.beginTransaction();
+		String hql="update Users user set user.publicKey=:publicKey where user.userId=:userId";
+		Query queryupdate=session.createQuery(hql);
+		queryupdate.setString("publicKey", publicKeyUrl);
+		queryupdate.setInteger("userId", user.getUserId());
+		int ret=queryupdate.executeUpdate();
+		trans.commit();
+		
+	}
 }

@@ -57,5 +57,8 @@
         <property name="userId" type="java.lang.Long">
             <column name="user_id" />
         </property>
+        <property name="encryptDataKey" type="binary" >
+        	<column name="encrypt_datakey"></column>
+        </property>
     </class>
 </hibernate-mapping>

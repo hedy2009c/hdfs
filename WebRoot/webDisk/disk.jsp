@@ -28,6 +28,8 @@
 }
 </style>
 </head>
+
+
 <body>
 	<input type="hidden" id="userId"
 		value="<%=session.getAttribute("userid")%>" />
@@ -37,6 +39,7 @@
 		value="<s:property value="currentId"/>" />
 	<input type="hidden" id="rootid"
 		value="<%=session.getAttribute("root")%>" />
+	
 	<div id="catalogs">
 
 		<ul id="WDtoolBar">
@@ -48,6 +51,7 @@
 			</li>
 			<!-- <li>排序</li> -->
 		</ul>
+		
 		<ul id="catalogContent"> <!-- 用来显示网盘页面内容，由/hdfs/webDisk/js/wd.js插入html代码 -->
 
 		</ul>
@@ -75,6 +79,7 @@
 		</div>
 		<div id="dirType" class="type10"></div>
 	</div>
+	
 	<div id="menu">
 		<ul>
 			<li><a href="#" command="openFile">打开</a>
@@ -89,10 +94,14 @@
 			</li>
 		</ul>
 	</div>
+	
 	<script type="text/javascript"
 		src="/hdfs/webDisk/js/jquery-1.3.1.min.js"></script>
+	
 	<script type="text/javascript" src="/hdfs/webDisk/js/wd.js"></script>
+	
 	<script type="text/javascript" src="/hdfs/webDisk/js/artDialog.min.js"></script>
+	
 	<script>
 		$(function() {
 
@@ -148,8 +157,12 @@
 								var _this = this;
 								var userId = $('#userId').val();
 								var currentId = getParentId();
-								var _html = '<form id ="uploadForm" action="uploadFile" method="post" enctype="multipart/form-data" style="height:60px">'
+								var _html = '<form id ="uploadForm" action="uploadFile" method="post" enctype="multipart/form-data" style="height:80px">'
 										+ '<input type="file" name="uploadFile" />'
+										+ '</br>'
+										+ '上传方式：'
+										+ '<input type="radio" name="uploadType" checked value="0">普通上传</>'
+										+ '<input type="radio" name="uploadType" value="1">加密上传</>'
 										+ '</br>'
 										+ '安全等级：'
 										+ '<input type="radio" name="safelevel" checked value="1" >低</>'
@@ -164,7 +177,7 @@
 								artDialog({
 									id : 'menu_4834783',
 									content : _html,
-									left : _x + 20,
+									left : _x + 200,
 									top : _y + 20,
 									title : '上传文件'
 

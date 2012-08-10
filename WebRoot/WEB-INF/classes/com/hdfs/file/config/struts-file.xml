@@ -57,18 +57,50 @@
 			<result name="success" >
 				/webDisk/disk.jsp
 			</result>
+			<result name="generateKeyPair"  type="redirectAction">
+			<param name="actionName">generateKeyPair</param>
+			<param name="userId">${userId}</param>
+			</result>
 		    <result name="fail">
 				/error.jsp
 		    </result>
 		</action>
+		
+		<action name="generateKeyPair" class="fileAction" method="generateKeyPair">
+		<result name="downLoadPrivateKey"  type="redirectAction">
+		<param name="actionName">downLoadPrivateKey</param>
+		<param name="userId">${requestScope.userId}</param>
+		</result>
+		</action>
+		
+		<action name="downLoadPrivateKey" class="fileAction" method="downLoadPrivateKey">
+		<result type="stream">
+			<param name="inputName">inputStream</param>
+			<param name="contentDisposition">attachment;filename="privateKey"</param>
+			<param name="bufferSize">4096</param>
+		</result>
+		</action>
 
 		<action name="downLoad" class="fileAction" method="downLoad">
-		     <result type="stream">
+		     <result name="success"  type="stream">
 				<param name="contentType">application/octet-stream</param>
 				<param name="inputName">inputStream</param>
 				<param name="contentDisposition">attachment;filename="${filename}"</param>
 				<param name="bufferSize">4096</param>
       		 </result>
+      		 
+      		 <result name="uploadPrivateKey">
+      		 /webDisk/uploadPrivateKey.jsp
+      		 </result>
+  		 </action>
+  		 
+  		 <action name="decryptFile" class="fileAction" method='decryptFile'>
+  		 	<result name="success" type="stream">
+  		 		<param name="contentType">application/octet-stream</param>
+  		 		<param name="inputName">inputStream</param>
+  		 		<param name="contentDisposition">attachment;filename="${filename}"</param>
+				<param name="bufferSize">4096</param>
+  		 	</result>
   		 </action>
 		
 		<action name="Monitor" class="monitorAction" method="nameNode">

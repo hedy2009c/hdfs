@@ -19,6 +19,12 @@ public interface userService {
 	
 	public Users findById(Users user);
 	
+	/**
+	 * 根据用户的Id来查询用户的信息。
+	 * 返回符合要求的具有完整信息的用户
+	 * @param user
+	 * @return
+	 */
 	public Users find(Users user);
 	
 	public Users findByName(Users user);

@@ -18,6 +18,7 @@
 	
 	<bean id="fileServiceImpl" class="com.hdfs.file.serviceImpl.fileServiceImpl">
 	<property name="filedao" ref="fileImpl"></property>	
+	<property name="userdao" ref="userImpl"></property>
 	</bean>
 	
 	<bean id="fileImpl" class="com.hdfs.file.daoImpl.fileImpl" />
