@@ -222,14 +222,22 @@ public class userAction extends BaseAction implements ServletRequestAware,
 	}
 
 	public String register() throws Exception {
+		// 根据用户名的哈希码设定rootId
 		String rootId = String.valueOf(pathToId.ParsepathToId(user
 				.getUsername()));
 		user.setRootDirectory(rootId);
 		this.user = this.userservice.save(user);
 		System.out.println(user.getUsername() + "    " + user.getUserId());
+		
+		// 在数据库中为该注册用户创建一个HdfsFile记录，用来表示该用户的根目录
+		// 在hdfs文件系统中为该用户创建一个根目录
 		fileservice.rootmkdir(47, user.getUsername(), user.getUserId()
 				.longValue(), Long.parseLong(rootId));
+		
+		// 创建该用户对应的存储空间
 		HdfsMemory memory = fileservice.insertMemory(user.getUserId(), 2);
+		
+		// 设置用户关于存储空间Id字段
 		user.setMemoryId(memory.getMemoryId());
 		userservice.updateUser(user);
 		if (this.user == null) {

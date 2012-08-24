@@ -31,4 +31,11 @@ public interface upLoadDao {
 	 */
 	public boolean copytoDfs(Configuration conf,
 			File localFile, String dst, boolean deleteSource,String filename, int safelevel);
+
+	/**
+	 * 判断filePath文件在hdfs文件系统是否存在
+	 * @param filePath
+	 * @return
+	 */
+	public boolean fileExists(Configuration conf, String filePath);
 }

@@ -317,6 +317,18 @@ public class fileImpl extends BaseDao implements fileDao {
 		trans.commit();
 		
 	}
+
+	@Override
+	public long getFileId(String fileUrl) {
+		String hql = "select fileId from HdfsFile where fileUrl=:fileUrl";
+		Session session = this.getSession();
+		Query query = session.createQuery(hql);
+		query.setParameter("fileUrl", fileUrl);
+		System.out.println(fileUrl);
+		long fileId =  (Long) query.uniqueResult();
+		System.out.println(fileId);
+		return fileId;
+	}
 	
 	
 }

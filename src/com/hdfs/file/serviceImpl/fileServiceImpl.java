@@ -161,6 +161,8 @@ public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) t
 //		System.out.println("the filepath is:"+parentPath);
 //		String filePath=parentPath.substring(1, parentPath.length());
 		System.out.println("the filepath is:"+parentPath);
+		
+		//newfile指向文件的完整路径
 		String newfile = null;
 		System.out.println(parentPath.length());
 		System.out.println(parentPath.lastIndexOf("/"));
@@ -170,21 +172,24 @@ public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) t
 		else{
 			newfile=parentPath+"/"+name;
 		}
+		
 		long fileId=rootid;//hash得出fileid
+		
 		HdfsFile hdfsfile=new HdfsFile(fileId, name, parentId,newfile, 0);
 		hdfsfile.setUserId(userId);
 		hdfsfile.setCreateTime(new Date());
 		hdfsfile.setModifiedTime(new Date());
 		
 			System.out.println(newfile);
-			boolean result=filedao.insertFile(hdfsfile);//保存文件
-			 createAction caction=new  createAction();
-			 caction.createDir(newfile);//操作文件系统
+			boolean result=filedao.insertFile(hdfsfile);//保存文件，即在数据库中保存该文件的信息
+			
+			//在hdfs文件系统创建相应的文件夹
+			createAction caction=new  createAction();
+			 caction.createDir(newfile);//操作hdfs文件系统
 			 return result;
-		
-		
-		
 	}
+
+
 	@Override
 	public String deleteFile(long fileId,HdfsMemory memory) {
 		// TODO Auto-generated method stub
@@ -581,5 +586,27 @@ public Boolean rootmkdir(long parentId, String name ,long userId, long rootid) t
 			e.printStackTrace();
 		}
         return in;
+	}
+
+	@Override
+	public boolean exists(long currentId, String filename) {
+		HdfsFile dfsfile=filedao.findFile(currentId);
+		String dst=dfsfile.getFileUrl();	//获得当前目录的url
+		String filePath = dst+ "/"+filename;
+	
+		upLoadAction upAction=new upLoadAction();
+		//查找路径filePath对应的文件是否存在
+		return upAction.fileExists(filePath);
+	}
+
+	@Override
+	public long getDeletedFileId(long currentId, String filename) {
+		/*
+		 * 获取要删除文件的完整路径
+		 */
+		HdfsFile dfsfile=filedao.findFile(currentId);
+		String dst=dfsfile.getFileUrl();	//获得当前目录的url
+		String filePath = dst+ "/"+filename;
+		return filedao.getFileId(filePath);
 	}
 }

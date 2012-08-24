@@ -9,16 +9,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.security.KeyPair;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
-import com.encryption.RSAEncrypter;
 import com.hdfs.comm.util.BaseAction;
 import com.hdfs.file.bean.HdfsFile;
 import com.hdfs.file.bean.HdfsMemory;
@@ -28,32 +24,37 @@ import com.hdfs.user.bean.Users;
 import com.hdfs.user.service.userService;
 
 public class fileAction extends BaseAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String wddescjson;// json格式的字符串
 
-	private userService userservice; //在spring-file.xml配置依赖注入
-	private fileService fileservice; //依赖注入
-	
+	private userService userservice; // 在spring-file.xml配置依赖注入
+	private fileService fileservice; // 依赖注入
+
 	private String file_url;
 
 	private long fileId;// 文件目录或者id
-	
+
 	File uploadFile;// 上传的文件
-	File privateKey; //上传的privateKey
-	
+	File privateKey; // 上传的privateKey
+
 	private String filename;// 上传的文件名
-	private String privateKeyName; //上传的私钥名
-	
+	private String privateKeyName; // 上传的私钥名
+
 	private String contentType;// 上传的文件类型
-	private int uploadType; //是否加密上传，1为加密上传，0为普通上传
-	private int safelevel;		//安全等级，即备份数
-	private String deadline;	//文件的有效日期
-	private long currentId;	// 当前文件夹的ID
-	private long userId;	// 用户ID
-	
+	private int uploadType; // 是否加密上传，1为加密上传，0为普通上传
+	private int safelevel; // 安全等级，即备份数
+	private String deadline; // 文件的有效日期
+	private long currentId; // 当前文件夹的ID
+	private long userId; // 用户ID
 
-	InputStream inputStream; //用于下载时的输入流 
+	private String coverFile; // 是否覆盖文件，"yes"表示覆盖，"no"表示取消覆盖。
+	private String absoluteFilePath;
 
-	
+	InputStream inputStream; // 用于下载时的输入流
 
 	public InputStream getInputStream() {
 		return inputStream;
@@ -95,7 +96,7 @@ public class fileAction extends BaseAction {
 	 * @param currentId
 	 *            , filename, userId
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public String domkDir() throws IOException {
 		if (null == filename || "".equals(filename)) {
@@ -121,14 +122,25 @@ public class fileAction extends BaseAction {
 		if (fileId == 0) {
 			return FAIL;
 		} else {
-			System.out.println("安全等级："+getSafelevel());
+			/*
+			 * 根据userId找到该user在数据库中的完整记录
+			 */
+			System.out.println("安全等级：" + getSafelevel());
 			Users user = new Users();
 			user.setUserId((int) userId);
 			System.out.println(user.getUserId());
 			user = userservice.find(user);
+
+			/*
+			 * 根据用户信息，取出对应的用户空间
+			 */
 			long memoryId = user.getMemoryId();
 			HdfsMemory memory = fileservice.getMemory((int) memoryId);
-			wddescjson = fileservice.deleteFile(fileId,memory);
+
+			/*
+			 * 删除该文件，并更新用户空间的已用空间
+			 */
+			wddescjson = fileservice.deleteFile(fileId, memory);
 			System.out.println("result is :" + wddescjson);
 		}
 		return SUCCESS;
@@ -170,63 +182,171 @@ public class fileAction extends BaseAction {
 	 */
 
 	public String uploadFile() {
-		byte[] encryptedDataSecretKey = null; //用来保存加密后的DES密钥
-		
+		byte[] encryptedDataSecretKey = null; // 用来保存加密后的DES密钥
 		Users user = new Users();
 		user.setUserId((int) userId);
-
 		user = userservice.find(user);
-		
+
 		long memoryId = user.getMemoryId();
 		HdfsMemory memory = fileservice.getMemory((int) memoryId);
-		
 		int free = memory.getTotalmemory() - memory.getMemoryused();
-		
-		if (getUploadType()!=0) { //加密上传
-			/*判断是否第一次使用加密上传的功能
-			 * 可以提取users表的public_key字段判断
+		/*
+		 * 将上传的临时文件uploadFile复制到dst文件。
+		 */
+		File dst = new File(ServletActionContext.getServletContext()
+				.getContextPath() + "/" + this.getFilename());
+		System.out.println("the context path of the web application is : "
+				+ ServletActionContext.getServletContext().getContextPath());
+		this.copy(uploadFile, dst);
+		/*
+		 * 判断上传的文件是否已经存在， 若存在，提示用户是否覆盖原有文件， 若覆盖原有文件，则先删除原有文件，再上传新文件。
+		 */
+		boolean fileExists = fileservice.exists(currentId, this.getFilename());
+		if (fileExists) {
+			System.out.println("Wddescjson: "+getWddescjson());
+			this.setFileId(fileservice.getDeletedFileId(currentId, this.getFilename()));
+			this.setAbsoluteFilePath(dst.getAbsolutePath());
+			return "cover";
+		}
+		if (getUploadType() != 0) { // 加密上传
+			/*
+			 * 判断是否第一次使用加密上传的功能 可以提取users表的public_key字段判断
 			 * 若publicKey字段为空，说明还没使用过加密上传的功能
 			 */
-			if(fileservice.isPublicKeyEmpty(user)) {	//查找该用户的publicKey是否为空
+			if (fileservice.isPublicKeyEmpty(user)) { // 查找该用户的publicKey是否为空
 				/*
 				 * 第一次使用加密上传功能
 				 */
 				return "generateKeyPair";
-				
-			}
-			else { //进入加密模块
+			} else { // 进入加密模块
 
 				/*
 				 * 生成DES密钥用来加密文件
 				 */
-				
-				encryptedDataSecretKey = fileservice.encryptFile(userId, uploadFile);
-				
-				uploadFile = new File(uploadFile.getAbsolutePath()+".des");
-				
+				encryptedDataSecretKey = fileservice.encryptFile(userId,
+						uploadFile);
+
+				uploadFile = new File(uploadFile.getAbsolutePath() + ".des");
+
 			}
 		}
 		if (free <= uploadFile.length() / 1024)
 			return FAIL;
 		else {
-
-			//File dst = new File(ServletActionContext.getServletContext().getContextPath()+ "/" + this.getFilename());
-			//System.out.println("the context path of the web application is : "+ServletActionContext.getServletContext().getContextPath());
-			// this.copy(uploadFile, dst);
-	
 			/*
 			 * 上传文件到hdfs
 			 */
-			dillResult result = fileservice.uploadFile(currentId, uploadFile,this.getFilename(),memory, getSafelevel(), deadline);
+			dillResult result = fileservice.uploadFile(currentId, uploadFile,
+					this.getFilename(), memory, getSafelevel(), deadline);
+			/*
+			 * 删除dst文件，dst文件是uploadFile文件的一个副本
+			 */
+			if (dst.exists()) {
+				dst.delete();
+			}
 
-			
 			if (result != null) {
-
-
 				this.setWddescjson(result.getWddescjson());
 				this.setCurrentId(result.getParentid());
 				this.setUserId(result.getUserId());
 				this.setFileId(result.getFileId());
+				if (getUploadType() != 0) { // 加密上传的后续处理
+					/*
+					 * 将加密后的数据密钥保存到数据库中 encryptedDataSecretKey
+					 * 即更新对应文件下的encrypt_DataKey属性
+					 */
+					HdfsFile hdfsFile = new HdfsFile();
+					hdfsFile.setFileId(fileId);
+
+					fileservice.storeEncryptDataKey(fileId,
+							encryptedDataSecretKey);
+
+				}
+				return SUCCESS;
+			} else {
+				return FAIL;
+			}
+		}
+	}
+
+	/**
+	 * 处理上传同名文件时，覆盖同名文件的操作
+	 * 
+	 * @return
+	 */
+	public String cover() {
+		byte[] encryptedDataSecretKey = null; //用来保存加密后的DES密钥
+		System.out.println("进入cover.action");
+		/*
+		 * 若选择覆盖，则先删除已存在文件
+		 * 再上传
+		 */
+		if (getCoverFile().equals("yes")) { //选择覆盖文件
+			System.out.println("选择覆盖已存在文件");
+			System.out.println(userId);
+			System.out.println(fileId);
+
+			/*
+			 * 删除已有文件
+			 */
+			/*
+			 * 根据userId找到该user在数据库中的完整记录
+			 */
+			Users user = new Users();
+			
+			user.setUserId((int) userId);
+			user = userservice.find(user);
+			
+			/*
+			 * 根据用户信息，取出对应的用户空间
+			 */
+			long memoryId = user.getMemoryId();
+			HdfsMemory memory = fileservice.getMemory((int) memoryId);
+			
+			/*
+			 * 删除该文件，并更新用户空间的已用空间
+			 */
+			wddescjson = fileservice.deleteFile(fileId,memory);
+			
+			int free = memory.getTotalmemory() - memory.getMemoryused();
+			File newUploadFile = new File(getAbsoluteFilePath());
+			
+			if (getUploadType()!=0) { //加密上传
+				/*判断是否第一次使用加密上传的功能
+				 * 可以提取users表的public_key字段判断
+				 * 若publicKey字段为空，说明还没使用过加密上传的功能
+				 */
+				if(fileservice.isPublicKeyEmpty(user)) {	//查找该用户的publicKey是否为空
+					/*
+					 * 第一次使用加密上传功能
+					 */
+					return "generateKeyPair";
+
+				}
+				else { //进入加密模块
+
+					/*
+					 * 生成DES密钥用来加密文件
+					 */
+
+					encryptedDataSecretKey = fileservice.encryptFile(userId, newUploadFile);
+					newUploadFile = new File(newUploadFile.getAbsolutePath()+".des");
+				}
+			}
+				if (free <= newUploadFile.length() / 1024)
+					return FAIL;
+				else {
+			/*
+			 * 上传文件
+			 */
+			dillResult result = fileservice.uploadFile(currentId, newUploadFile,this.getFilename(),memory, getSafelevel(), deadline);
+			if (result != null) {
+				System.out.println("有result！");
+				this.setWddescjson(result.getWddescjson());
+				this.setCurrentId(result.getParentid());
+				this.setUserId(result.getUserId());
+				this.setFileId(result.getFileId());
+				
 				if (getUploadType()!=0) { //加密上传的后续处理
 			        /*
 			         * 将加密后的数据密钥保存到数据库中 encryptedDataSecretKey
@@ -237,12 +357,21 @@ public class fileAction extends BaseAction {
 
 					fileservice.storeEncryptDataKey(fileId, encryptedDataSecretKey );
 					
-				}
+		}
 				return SUCCESS;
-			} else {
+			}
+			else {
 				return FAIL;
 			}
+	}
+			}
+		else {
+			System.out.println("不选择覆盖!");
+			String listfile= fileservice.listFile(currentId, userId);
+			this.setWddescjson(listfile);
+			return SUCCESS;
 		}
+		
 	}
 
 	public String downLoad() throws IOException {
@@ -254,13 +383,11 @@ public class fileAction extends BaseAction {
 		}
 
 		/*
-		 * 若为普通文件，直接设置inputStream为该输入流
-		 * 否则，需要用户上传privateKey来辅助解密该文件
+		 * 若为普通文件，直接设置inputStream为该输入流 否则，需要用户上传privateKey来辅助解密该文件
 		 */
 		if (fileservice.isEncryptFile(this.getFileId())) {
 			return "uploadPrivateKey";
-		}
-		else {
+		} else {
 			/*
 			 * 获取存储在hdfs文件系统上的文件（普通文件或加密文件）
 			 */
@@ -270,9 +397,9 @@ public class fileAction extends BaseAction {
 			return SUCCESS;
 		}
 	}
-	
+
 	public String decryptFile() throws IOException {
-		
+
 		if (this.getFileId() == 0) {
 			return FAIL;
 		}
@@ -281,24 +408,28 @@ public class fileAction extends BaseAction {
 		}
 		File file = fileservice.downLoad(this.getFileId());
 		/*
-		 * 利用privateKey文件解密“加密后的数据密钥”
-		 * 用数据密钥解密文件
+		 * 利用privateKey文件解密“加密后的数据密钥” 用数据密钥解密文件
 		 */
-		if (privateKey==null) {
+		if (privateKey == null) {
 			return FAIL;
 		}
 		InputStream in = fileservice.decryptFile(privateKey, fileId, file);
-		
+
 		this.setInputStream(in);
 		return SUCCESS;
 
 	}
 
+	/**
+	 * 把src文件复制到dst文件
+	 * 
+	 * @param src
+	 * @param dst
+	 */
 	private void copy(File src, File dst) {
 		try {
 			InputStream in = null;
 			OutputStream out = null;
-			BufferedInputStream l;
 			try {
 				in = new BufferedInputStream(new FileInputStream(src), 64);
 				out = new BufferedOutputStream(new FileOutputStream(dst), 64);
@@ -319,38 +450,38 @@ public class fileAction extends BaseAction {
 		}
 	}
 
-
 	/**
-	 * 生成RSA密钥对，并保存公钥到数据库中
+	 * 生成RSA密钥对，并保存公钥在服务器上的路径到数据库中
 	 */
 	public String generateKeyPair() {
-		
+
 		Users user = new Users();
 		user.setUserId((int) userId);
 		user = userservice.find(user);
-		
+
 		try {
 			fileservice.generatePublicKey(user);
-			
-		}catch (Exception e) {   
-            e.printStackTrace();   
-        }  
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "downLoadPrivateKey";
 	}
 
 	/**
 	 * 下载privateKey文件到客户端
+	 * 
 	 * @return
 	 * @throws IOException
 	 */
 	public String downLoadPrivateKey() throws IOException {
 
-		String privateKeyPath = "D:/hdfs/"+userId+"/privateKey";
+		String privateKeyPath = "D:/hdfs/" + userId + "/privateKey";
 		InputStream in = new FileInputStream(privateKeyPath);
 		this.setInputStream(in);
 		return SUCCESS;
 	}
-	
+
 	public long getFileId() {
 		return fileId;
 	}
@@ -414,15 +545,19 @@ public class fileAction extends BaseAction {
 
 	/**
 	 * 以struts2要求的格式设置所要上传的文件
-	 * @param uploadFile 应用服务器下的临时文件
+	 * 
+	 * @param uploadFile
+	 *            应用服务器下的临时文件
 	 */
 	public void setUploadFile(File uploadFile) {
 		this.uploadFile = uploadFile;
 	}
-	
+
 	/**
 	 * 以struts2要求的格式设置所要上传的文件
-	 * @param privateKey 要上传的rsa私钥
+	 * 
+	 * @param privateKey
+	 *            要上传的rsa私钥
 	 */
 	public void setPrivateKey(File privateKey) {
 		this.privateKey = privateKey;
@@ -436,43 +571,46 @@ public class fileAction extends BaseAction {
 		this.contentType = contentType;
 	}
 
-
 	/**
-	 *以struts2规定的格式设置上传的文件的类型
-	 * setXContentType
-	 * @param contentType 上传文件的类型
+	 * 以struts2规定的格式设置上传的文件的类型 setXContentType
+	 * 
+	 * @param contentType
+	 *            上传文件的类型
 	 */
-	public void setUploadFileContentType(String contentType) { 
+	public void setUploadFileContentType(String contentType) {
 		this.contentType = contentType;
 	}
 
 	/**
-	 * 以struts2规定的格式设置上传的文件的类型
-	 * setXContentType
-	 * @param contentType 上传文件的类型
+	 * 以struts2规定的格式设置上传的文件的类型 setXContentType
+	 * 
+	 * @param contentType
+	 *            上传文件的类型
 	 */
-	public void setPrivateKeyContentType(String contentType) { 
+	public void setPrivateKeyContentType(String contentType) {
 		this.contentType = contentType;
 	}
-	
+
 	/**
-	 * 以struts2规定的格式设置上传文件的实际名字
-	 * setXFileName
-	 * @param fileName 实际名字
+	 * 以struts2规定的格式设置上传文件的实际名字 setXFileName
+	 * 
+	 * @param fileName
+	 *            实际名字
 	 */
 	public void setUploadFileFileName(String fileName) {
 		this.filename = fileName;
 	}
 
 	/**
-	 * 以struts2规定的格式设置上传文件的实际名字
-	 * setXFileName
-	 * @param fileName 实际名字
+	 * 以struts2规定的格式设置上传文件的实际名字 setXFileName
+	 * 
+	 * @param fileName
+	 *            实际名字
 	 */
 	public void setPrivateKeyFileName(String fileName) {
 		this.setPrivateKeyName(fileName);
 	}
-	
+
 	public void setSafelevel(int safelevel) {
 		this.safelevel = safelevel;
 	}
@@ -480,54 +618,71 @@ public class fileAction extends BaseAction {
 	public int getSafelevel() {
 		return safelevel;
 	}
-	
-	
-		
-		public void nodeprint() throws IOException{
-			HttpServletResponse response = ServletActionContext.getResponse();
-			response.setContentType("text/xml;charset=utf-8");   
-	        response.setHeader("Cache-Control", "no-cache");
-			PrintWriter out = response.getWriter();
-			System.out.println("调用了.........");
-			ArrayList<HdfsFile> list=  (ArrayList<HdfsFile>)fileservice.listAllFile();
-		    if(list!=null&&list.size()>0){
-		    	out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		        out.println("<nodes>");
-		    	for(int i=0;i<list.size();i++){
-		    		HdfsFile file = list.get(i);
-		    		out.println("<node file_id='"+file.getFileId()+"' parentid='"+file.getParentid()+"' hrefAddress='"+file.getFileId()+"' userid='"+file.getUserId()+"'>"+file.getFileName()+"</node>");
-		    		System.out.println(file.getFileName());
-		    	}
-		    	out.println("</nodes>");
-		    }
-		    System.out.println("调用完成");
-			
+
+	public void nodeprint() throws IOException {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("text/xml;charset=utf-8");
+		response.setHeader("Cache-Control", "no-cache");
+		PrintWriter out = response.getWriter();
+		System.out.println("调用了.........");
+		ArrayList<HdfsFile> list = (ArrayList<HdfsFile>) fileservice
+				.listAllFile();
+		if (list != null && list.size() > 0) {
+			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+			out.println("<nodes>");
+			for (int i = 0; i < list.size(); i++) {
+				HdfsFile file = list.get(i);
+				out.println("<node file_id='" + file.getFileId()
+						+ "' parentid='" + file.getParentid()
+						+ "' hrefAddress='" + file.getFileId() + "' userid='"
+						+ file.getUserId() + "'>" + file.getFileName()
+						+ "</node>");
+				System.out.println(file.getFileName());
+			}
+			out.println("</nodes>");
+		}
+		System.out.println("调用完成");
+
 	}
 
-		public void setDeadline(String deadline) {
-			this.deadline = deadline;
-		}
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
+	}
 
-		public String getDeadline() {
-			return deadline;
-		}
+	public String getDeadline() {
+		return deadline;
+	}
 
-		public int getUploadType() {
-			return uploadType;
-		}
+	public int getUploadType() {
+		return uploadType;
+	}
 
-		public void setUploadType(int uploadType) {
-			this.uploadType = uploadType;
-		}
+	public void setUploadType(int uploadType) {
+		this.uploadType = uploadType;
+	}
 
-		public String getPrivateKeyName() {
-			return privateKeyName;
-		}
+	public String getPrivateKeyName() {
+		return privateKeyName;
+	}
 
-		public void setPrivateKeyName(String privateKeyName) {
-			this.privateKeyName = privateKeyName;
-		}
+	public void setPrivateKeyName(String privateKeyName) {
+		this.privateKeyName = privateKeyName;
+	}
 
+	public String getCoverFile() {
+		return coverFile;
+	}
 
+	public void setCoverFile(String coverFile) {
+		this.coverFile = coverFile;
+	}
+
+	public String getAbsoluteFilePath() {
+		return absoluteFilePath;
+	}
+
+	public void setAbsoluteFilePath(String absoluteFilePath) {
+		this.absoluteFilePath = absoluteFilePath;
+	}
 
 }

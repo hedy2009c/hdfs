@@ -157,6 +157,7 @@
 								var _this = this;
 								var userId = $('#userId').val();
 								var currentId = getParentId();
+								var wddescjson = $('#wddescjson').val();
 								var _html = '<form id ="uploadForm" action="uploadFile" method="post" enctype="multipart/form-data" style="height:80px">'
 										+ '<input type="file" name="uploadFile" />'
 										+ '</br>'

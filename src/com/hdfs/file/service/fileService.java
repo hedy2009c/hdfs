@@ -133,5 +133,21 @@ public interface fileService {
 	 */
 	InputStream decryptFile(File privateKey, long fileId, File file);
 
+	/**
+	 * 判断当前文件夹currentId下，文件filename是否存在。
+	 * @param currentId	当前文件夹
+	 * @param filename 文件名
+	 * @return
+	 */
+	boolean exists(long currentId, String filename);
+
+	/**
+	 * 获取将要删除的文件的ID
+	 * @param currentId
+	 * @param filename
+	 * @return
+	 */
+	long getDeletedFileId(long currentId, String filename);
+
 
 }

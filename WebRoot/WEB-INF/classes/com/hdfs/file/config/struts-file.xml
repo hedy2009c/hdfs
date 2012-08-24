@@ -61,6 +61,9 @@
 			<param name="actionName">generateKeyPair</param>
 			<param name="userId">${userId}</param>
 			</result>
+			<result name="cover">
+				/webDisk/cover.jsp
+			</result>
 		    <result name="fail">
 				/error.jsp
 		    </result>
@@ -69,7 +72,7 @@
 		<action name="generateKeyPair" class="fileAction" method="generateKeyPair">
 		<result name="downLoadPrivateKey"  type="redirectAction">
 		<param name="actionName">downLoadPrivateKey</param>
-		<param name="userId">${requestScope.userId}</param>
+		<param name="userId">${userId}</param>
 		</result>
 		</action>
 		
@@ -79,6 +82,19 @@
 			<param name="contentDisposition">attachment;filename="privateKey"</param>
 			<param name="bufferSize">4096</param>
 		</result>
+		</action>
+		
+		<action name="cover"  class="fileAction"  method="cover">
+			<result name="success" >
+				/webDisk/disk.jsp
+			</result>
+			<result name="generateKeyPair"  type="redirectAction">
+			<param name="actionName">generateKeyPair</param>
+			<param name="userId">${userId}</param>
+			</result>
+			<result name="fail">
+				/error.jsp
+		    </result>
 		</action>
 
 		<action name="downLoad" class="fileAction" method="downLoad">

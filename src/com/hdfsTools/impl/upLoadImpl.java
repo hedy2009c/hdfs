@@ -39,6 +39,7 @@ public class upLoadImpl implements upLoadDao {
 	public boolean copytoDfs(Configuration conf, File localFile, String dst, boolean deleteSource,String filename,int safelevel) {
 		
 		Path dstFile=new Path(dst+"/"+filename);
+		
 		boolean result=false;
 		try{
 			FileSystem fs = FileSystem.get(conf);
@@ -51,6 +52,18 @@ public class upLoadImpl implements upLoadDao {
 		}
 		
 	}
-	
 
+	@SuppressWarnings("finally")
+	@Override
+	public boolean fileExists(Configuration conf, String filePath) {
+		boolean result=false;
+		try{
+			FileSystem fs = FileSystem.get(conf);
+			result = fs.exists(new Path(filePath));
+		}catch(IOException e){
+			e.printStackTrace();
+		}finally{
+			return result;
+		}
+	}
 }

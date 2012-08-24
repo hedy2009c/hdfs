@@ -71,6 +71,11 @@ public interface fileDao {
 
 	public void updateEncrypt_DataKey(HdfsFile hdfsFile,
 			byte[] encryptedDataSecretKey);
+
+	/*
+	 * 根据文件url,也就是filePath,查找对应文件的Id
+	 */
+	public long getFileId(String fileUrl);
 	
 	
 }

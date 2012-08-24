@@ -99,21 +99,6 @@ public class CheckAction extends BaseAction{
     	  return size;
       }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public static void main(String args[]){
 	
 		CheckAction check=	new CheckAction() ;

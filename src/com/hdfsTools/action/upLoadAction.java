@@ -63,4 +63,9 @@ public class upLoadAction extends BaseAction{
 	new upLoadAction().copyFiletoFs(fsUrl, localFile, dst, deleteSource);
 		//new upLoadAction(fsUrl);
 	}
+	public boolean fileExists(String filePath) {
+		upLoadDao upload=new upLoadImpl();
+		return upload.fileExists(getConf(),filePath);
+		
+	}
 }
