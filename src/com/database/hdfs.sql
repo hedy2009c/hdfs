@@ -1,4 +1,5 @@
-﻿create database hdfs;
+DROP DATABASE IF EXISTS `hdfs`;
+create database hdfs;
 use hdfs;
 /*
 Navicat MySQL Data Transfer
@@ -143,11 +144,12 @@ CREATE TABLE `users` (
   `role` int(11) DEFAULT '1',
   `root_directory` varchar(30) DEFAULT NULL COMMENT '用户对应的根目录，对应于directory里面的目录',
   `public_key` varchar(20) DEFAULT NULL COMMENT '用户的公钥的url',
+  `checkuser` int DEFAULT NULL COMMENT '核对注册用户',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('28', 'admin', 'admin', 'lin@scut.edu.cn', '1376060', '24', '2', '92668751',null);
-INSERT INTO `users` VALUES ('29', 'aa', 'aa', 'aa@com', '833393993', '25', null, '3104',null);
+INSERT INTO `users` VALUES ('28', 'admin', 'admin', 'lin@scut.edu.cn', '1376060', '24', '2', '92668751',1,null);
+INSERT INTO `users` VALUES ('29', 'aa', 'aa', 'aa@com', '833393993', '25', null, '3104',null,null);

@@ -86,9 +86,14 @@ $(function(){
 		    window.location.href=url;
 			},
 			downloadFile: function(){
+				var userId = $('#userId').val();
+				var wddescjson = $('#wddescjson').val();
+				var currentId = $('#currentId').val();
+				var rootid = $('#rootid').val();
 				var fileId = $('.curFile').attr('fileId');
 			var fileName = $('.curFile').attr('fileName');
-				var url="/hdfs/file/downLoad?fileId="+fileId+"&filename="+fileName;
+				var url="/hdfs/file/downLoad?fileId="+fileId+"&filename="+fileName+"&userId="+userId+"&currentId="+currentId+"&wddescjson="+wddescjson+"&rootid="+rootid;
+							
 				window.location.href=url;
 			},
 			cancel: function(event){
@@ -248,6 +253,7 @@ $(function(){
 			var cmd = $(this).attr('command');
 			menuCommand[cmd](event);
 		});
+		//返回上一层
 		$('#reBack').bind('click',function(){
 	
 			var userId=document.getElementById("userId").value;
@@ -260,7 +266,6 @@ $(function(){
 			}
 			
 		});
-		
 
 		function eachDirectory(dir,parentId){
 	
