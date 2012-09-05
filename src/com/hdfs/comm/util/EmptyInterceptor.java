@@ -1,7 +1,5 @@
 package com.hdfs.comm.util;
 
-
-
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 

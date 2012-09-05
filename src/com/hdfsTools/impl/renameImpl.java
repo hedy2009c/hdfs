@@ -8,17 +8,16 @@ import org.apache.hadoop.fs.Path;
 
 import com.hdfsTools.dao.renameDao;
 
-public class renameImpl implements renameDao{
+public class renameImpl implements renameDao {
 
 	@Override
 	public boolean rename(Configuration conf, String src, String dst)
 			throws IOException {
 		FileSystem fs = FileSystem.get(conf);
 		Path srcPath = new Path(src);
-		Path dstPath=new Path(dst);
-		
+		Path dstPath = new Path(dst);
+
 		return fs.rename(srcPath, dstPath);
 	}
 
-	
 }

@@ -44,15 +44,15 @@ public class HdfsFile implements java.io.Serializable {
 		this.parentid = parentid;
 		this.fileUrl = fileUrl;
 		this.type = type;
-		this.createTime=new Date();
-		this.modifiedTime=new Date();
-		
+		this.createTime = new Date();
+		this.modifiedTime = new Date();
+
 	}
 
 	public HdfsFile(long fileId, String fileName, long parentid, Long size,
 			String fileUrl, Date createTime, Date modifiedTime,
 			Integer safeLevel, Integer timing, Integer importantLevel,
-			Integer fsId, int type, Long userId, byte[] encryptDataKey ) {
+			Integer fsId, int type, Long userId, byte[] encryptDataKey) {
 		this.fileId = fileId;
 		this.fileName = fileName;
 		this.parentid = parentid;
@@ -129,8 +129,6 @@ public class HdfsFile implements java.io.Serializable {
 	public void setSafeLevel(Integer safeLevel) {
 		this.safeLevel = safeLevel;
 	}
-
-
 
 	public int getType() {
 		return this.type;

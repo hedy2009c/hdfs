@@ -13,7 +13,7 @@ public interface mkdirDao {
 	 * @return
 	 * @throws IOException
 	 */
-	public  boolean createDir(Configuration conf,String dirUrl)throws IOException;
-	
-	
+	public boolean createDir(Configuration conf, String dirUrl)
+			throws IOException;
+
 }

@@ -6,15 +6,14 @@ import com.hdfs.user.bean.Users;
 import com.hdfs.user.dao.userDao;
 import com.hdfs.user.service.userService;
 
-public class userServiceImpl implements userService{
-	
-	public userDao userdao;
+public class userServiceImpl implements userService {
 
+	public userDao userdao;
 
 	@Override
 	public void updateUser(Users user) {
 		this.userdao.updateUser(user);
-		
+
 	}
 
 	public userDao getUserdao() {
@@ -24,26 +23,23 @@ public class userServiceImpl implements userService{
 	public void setUserdao(userDao userdao) {
 		this.userdao = userdao;
 	}
-	
+
 	@Override
-	public Users find(Users user)
-	{
+	public Users find(Users user) {
 		return this.userdao.find(user);
 	}
 
 	@Override
-	public Users findByName(Users user)
-	{
+	public Users findByName(Users user) {
 		return this.userdao.findByName(user);
 	}
-
 
 	@Override
 	public void delete(Users users) {
 
 		this.userdao.removeUsers(users);
 	}
-	
+
 	@Override
 	public List<Users> findAll() {
 		return this.userdao.findAllUsers();
@@ -64,6 +60,5 @@ public class userServiceImpl implements userService{
 	public Users getcheckuserById(Users user) {
 		return this.userdao.getcheckuserById(user);
 	}
-
 
 }

@@ -12,57 +12,58 @@ import com.hdfsTools.dao.upLoadDao;
 
 public class upLoadImpl implements upLoadDao {
 
-    /**
-     * Copy local files to a FileSystem.
-     */
+	/**
+	 * Copy local files to a FileSystem.
+	 */
 	@Override
 	@SuppressWarnings("finally")
-	public boolean copyFiletoFs(Configuration conf, String localFile, String dst,
-			boolean deleteSource){
-		File src = new File(localFile); 
-		String fileName=src.getName();
-		Path dstFile=new Path(dst+"/"+fileName);
-		boolean result=false;
-		try{
-			FileSystem fs = FileSystem.get(conf);//����ļ�ϵͳʵ��
-			result=FileUtil.copy(src, fs, dstFile, deleteSource, conf);
-		}catch(IOException e){
+	public boolean copyFiletoFs(Configuration conf, String localFile,
+			String dst, boolean deleteSource) {
+		File src = new File(localFile);
+		String fileName = src.getName();
+		Path dstFile = new Path(dst + "/" + fileName);
+		boolean result = false;
+		try {
+			FileSystem fs = FileSystem.get(conf);// ����ļ�ϵͳʵ��
+			result = FileUtil.copy(src, fs, dstFile, deleteSource, conf);
+		} catch (IOException e) {
 			System.out.println("成功");
-		}finally{
+		} finally {
 			return result;
 		}
-		
+
 	}
 
 	@SuppressWarnings("finally")
 	@Override
-	public boolean copytoDfs(Configuration conf, File localFile, String dst, boolean deleteSource,String filename,int safelevel) {
-		
-		Path dstFile=new Path(dst+"/"+filename);
-		
-		boolean result=false;
-		try{
+	public boolean copytoDfs(Configuration conf, File localFile, String dst,
+			boolean deleteSource, String filename, int safelevel) {
+
+		Path dstFile = new Path(dst + "/" + filename);
+
+		boolean result = false;
+		try {
 			FileSystem fs = FileSystem.get(conf);
 			fs.setReplication(dstFile, (short) safelevel);
-			result=FileUtil.copy(localFile, fs, dstFile, deleteSource, conf);
-		}catch(IOException e){
+			result = FileUtil.copy(localFile, fs, dstFile, deleteSource, conf);
+		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			return result;
 		}
-		
+
 	}
 
 	@SuppressWarnings("finally")
 	@Override
 	public boolean fileExists(Configuration conf, String filePath) {
-		boolean result=false;
-		try{
+		boolean result = false;
+		try {
 			FileSystem fs = FileSystem.get(conf);
 			result = fs.exists(new Path(filePath));
-		}catch(IOException e){
+		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			return result;
 		}
 	}

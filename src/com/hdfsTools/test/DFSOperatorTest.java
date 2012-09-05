@@ -13,7 +13,7 @@ public class DFSOperatorTest {
 
 		testReadFile();
 	}
-	
+
 	public static void testReadFile() {
 		try {
 			Configuration config = new Configuration();

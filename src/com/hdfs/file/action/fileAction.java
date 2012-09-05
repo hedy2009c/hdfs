@@ -111,18 +111,18 @@ public class fileAction extends BaseAction {
 
 	}
 
-
-	/**  搜索
+	/**
+	 * 搜索
 	 * 
 	 * @return
 	 * @throws IOException
 	 */
-	public String dosearchFile()  {
-		wddescjson = fileservice.searchfile( filename, userId);
+	public String dosearchFile() {
+		wddescjson = fileservice.searchfile(filename, userId);
 		return SUCCESS;
-		
+
 	}
-	
+
 	/**
 	 * 删除文件或者文件夹
 	 * 
@@ -215,8 +215,9 @@ public class fileAction extends BaseAction {
 		 */
 		boolean fileExists = fileservice.exists(currentId, this.getFilename());
 		if (fileExists) {
-			System.out.println("Wddescjson: "+getWddescjson());
-			this.setFileId(fileservice.getDeletedFileId(currentId, this.getFilename()));
+			System.out.println("Wddescjson: " + getWddescjson());
+			this.setFileId(fileservice.getDeletedFileId(currentId,
+					this.getFilename()));
 			this.setAbsoluteFilePath(dst.getAbsolutePath());
 			return "cover";
 		}
@@ -287,13 +288,12 @@ public class fileAction extends BaseAction {
 	 * @return
 	 */
 	public String cover() {
-		byte[] encryptedDataSecretKey = null; //用来保存加密后的DES密钥
+		byte[] encryptedDataSecretKey = null; // 用来保存加密后的DES密钥
 		System.out.println("进入cover.action");
 		/*
-		 * 若选择覆盖，则先删除已存在文件
-		 * 再上传
+		 * 若选择覆盖，则先删除已存在文件 再上传
 		 */
-		if (getCoverFile().equals("yes")) { //选择覆盖文件
+		if (getCoverFile().equals("yes")) { // 选择覆盖文件
 			System.out.println("选择覆盖已存在文件");
 			System.out.println(userId);
 			System.out.println(fileId);
@@ -305,85 +305,87 @@ public class fileAction extends BaseAction {
 			 * 根据userId找到该user在数据库中的完整记录
 			 */
 			Users user = new Users();
-			
+
 			user.setUserId((int) userId);
 			user = userservice.find(user);
-			
+
 			/*
 			 * 根据用户信息，取出对应的用户空间
 			 */
 			long memoryId = user.getMemoryId();
 			HdfsMemory memory = fileservice.getMemory((int) memoryId);
-			
+
 			/*
 			 * 删除该文件，并更新用户空间的已用空间
 			 */
-			wddescjson = fileservice.deleteFile(fileId,memory);
-			
+			wddescjson = fileservice.deleteFile(fileId, memory);
+
 			int free = memory.getTotalmemory() - memory.getMemoryused();
 			File newUploadFile = new File(getAbsoluteFilePath());
-			
-			if (getUploadType()!=0) { //加密上传
-				/*判断是否第一次使用加密上传的功能
-				 * 可以提取users表的public_key字段判断
+
+			if (getUploadType() != 0) { // 加密上传
+				/*
+				 * 判断是否第一次使用加密上传的功能 可以提取users表的public_key字段判断
 				 * 若publicKey字段为空，说明还没使用过加密上传的功能
 				 */
-				if(fileservice.isPublicKeyEmpty(user)) {	//查找该用户的publicKey是否为空
+				if (fileservice.isPublicKeyEmpty(user)) { // 查找该用户的publicKey是否为空
 					/*
 					 * 第一次使用加密上传功能
 					 */
 					return "generateKeyPair";
 
-				}
-				else { //进入加密模块
+				} else { // 进入加密模块
 
 					/*
 					 * 生成DES密钥用来加密文件
 					 */
 
-					encryptedDataSecretKey = fileservice.encryptFile(userId, newUploadFile);
-					newUploadFile = new File(newUploadFile.getAbsolutePath()+".des");
+					encryptedDataSecretKey = fileservice.encryptFile(userId,
+							newUploadFile);
+					newUploadFile = new File(newUploadFile.getAbsolutePath()
+							+ ".des");
 				}
 			}
-				if (free <= newUploadFile.length() / 1024)
-					return FAIL;
-				else {
-			/*
-			 * 上传文件
-			 */
-			dillResult result = fileservice.uploadFile(currentId, newUploadFile,this.getFilename(),memory, getSafelevel(), deadline);
-			if (result != null) {
-				System.out.println("有result！");
-				this.setWddescjson(result.getWddescjson());
-				this.setCurrentId(result.getParentid());
-				this.setUserId(result.getUserId());
-				this.setFileId(result.getFileId());
-				
-				if (getUploadType()!=0) { //加密上传的后续处理
-			        /*
-			         * 将加密后的数据密钥保存到数据库中 encryptedDataSecretKey
-			         * 即更新对应文件下的encrypt_DataKey属性
-			         */
-					HdfsFile hdfsFile = new HdfsFile();
-					hdfsFile.setFileId(fileId);
-
-					fileservice.storeEncryptDataKey(fileId, encryptedDataSecretKey );
-					
-		}
-				return SUCCESS;
-			}
-			else {
+			if (free <= newUploadFile.length() / 1024)
 				return FAIL;
+			else {
+				/*
+				 * 上传文件
+				 */
+				dillResult result = fileservice.uploadFile(currentId,
+						newUploadFile, this.getFilename(), memory,
+						getSafelevel(), deadline);
+				if (result != null) {
+					System.out.println("有result！");
+					this.setWddescjson(result.getWddescjson());
+					this.setCurrentId(result.getParentid());
+					this.setUserId(result.getUserId());
+					this.setFileId(result.getFileId());
+
+					if (getUploadType() != 0) { // 加密上传的后续处理
+						/*
+						 * 将加密后的数据密钥保存到数据库中 encryptedDataSecretKey
+						 * 即更新对应文件下的encrypt_DataKey属性
+						 */
+						HdfsFile hdfsFile = new HdfsFile();
+						hdfsFile.setFileId(fileId);
+
+						fileservice.storeEncryptDataKey(fileId,
+								encryptedDataSecretKey);
+
+					}
+					return SUCCESS;
+				} else {
+					return FAIL;
+				}
 			}
-	}
-			}
-		else {
+		} else {
 			System.out.println("不选择覆盖!");
-			String listfile= fileservice.listFile(currentId, userId);
+			String listfile = fileservice.listFile(currentId, userId);
 			this.setWddescjson(listfile);
 			return SUCCESS;
 		}
-		
+
 	}
 
 	public String downLoad() throws IOException {

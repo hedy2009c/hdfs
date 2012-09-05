@@ -7,33 +7,36 @@ import org.apache.hadoop.conf.Configuration;
 
 public interface upLoadDao {
 
-    /**
-     * Copy local files to a FileSystem.	
-     * @param fsUrl
-     * @param localFile
-     * @param dst
-     * @param deleteSource
-     * @return
-     * @throws IOException
-     */
-	public boolean copyFiletoFs(Configuration conf,
-			String localFile, String dst, boolean deleteSource);
-	
+	/**
+	 * Copy local files to a FileSystem.
+	 * 
+	 * @param fsUrl
+	 * @param localFile
+	 * @param dst
+	 * @param deleteSource
+	 * @return
+	 * @throws IOException
+	 */
+	public boolean copyFiletoFs(Configuration conf, String localFile,
+			String dst, boolean deleteSource);
+
 	/**
 	 * 
 	 * @param conf
-	 * @param localFile 类型是File
+	 * @param localFile
+	 *            类型是File
 	 * @param dst
 	 * @param deleteSource
-	 * @param safelevel 
-	 * @param  
+	 * @param safelevel
+	 * @param
 	 * @return
 	 */
-	public boolean copytoDfs(Configuration conf,
-			File localFile, String dst, boolean deleteSource,String filename, int safelevel);
+	public boolean copytoDfs(Configuration conf, File localFile, String dst,
+			boolean deleteSource, String filename, int safelevel);
 
 	/**
 	 * 判断filePath文件在hdfs文件系统是否存在
+	 * 
 	 * @param filePath
 	 * @return
 	 */

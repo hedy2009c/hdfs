@@ -25,55 +25,54 @@ public class fileImpl extends BaseDao implements fileDao {
 		query.setParameter("currentId", currentId);
 		query.setParameter("userId", userId);
 		List<HdfsFile> fileList = query.list();
-		System.out.println("第一个list"+fileList.toString());
-		if (fileList.size()==0) {
+		System.out.println("第一个list" + fileList.toString());
+		if (fileList.size() == 0) {
 			hql = "select parentid from HdfsFile where fileId=:currentId";
 			query = session.createQuery(hql);
 			query.setParameter("currentId", currentId);
 			String pId = query.uniqueResult().toString();
-			
+
 			hql = "from HdfsFile where userId=:userId and parentid=:currentId";
 			session = this.getSession();
 			Query query1 = session.createQuery(hql);
 			query1.setParameter("currentId", Long.parseLong(pId));
 			query1.setParameter("userId", userId);
-			System.out.println(Long.parseLong(pId)+"   " +userId);
+			System.out.println(Long.parseLong(pId) + "   " + userId);
 			fileList = query1.list();
-			System.out.println("第二个list:"+fileList.toString()+fileList.size()+"-----------------------------------");
-			
+			System.out.println("第二个list:" + fileList.toString()
+					+ fileList.size() + "-----------------------------------");
+
 		}
 		return fileList;
 	}
-	
+
 	@Override
-	public List<HdfsFile> SearchFile(String searchfileName,long userid) {
-		
-		
+	public List<HdfsFile> SearchFile(String searchfileName, long userid) {
+
 		// TODO Auto-generated method stub
-				
-				String hql = " from HdfsFile where fileName like :param and type>0 and userId =:userid";
-				Session session = this.getSession();
-				Query query = session.createQuery(hql);
-				query.setParameter("param", "%" + searchfileName + "%");
-				query.setParameter("userid", userid);
-				//query.setParameter("fileName", searchfileName);
-				List<HdfsFile> fileList = query.list();
-				System.out.println("set1");
-				System.out.println("搜索hhhh"+fileList.toString());
-				return fileList;
+
+		String hql = " from HdfsFile where fileName like :param and type>0 and userId =:userid";
+		Session session = this.getSession();
+		Query query = session.createQuery(hql);
+		query.setParameter("param", "%" + searchfileName + "%");
+		query.setParameter("userid", userid);
+		// query.setParameter("fileName", searchfileName);
+		List<HdfsFile> fileList = query.list();
+		System.out.println("set1");
+		System.out.println("搜索hhhh" + fileList.toString());
+		return fileList;
 	}
 
-	
-	
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<HdfsFile> listAllFile() {
 
 		String hql = "from HdfsFile";
-		//users order by users.id desc";
+		// users order by users.id desc";
 		return this.getHibernateTemplate().find(hql);
-		
+
 	}
+
 	@Override
 	public String getFileUrl(long fileId) {
 		// TODO Auto-generated method stub
@@ -161,9 +160,7 @@ public class fileImpl extends BaseDao implements fileDao {
 		memory = (HdfsMemory) session.get(HdfsMemory.class, memoryId);
 		return memory;
 	}
-	
-	
-	
+
 	@Override
 	public boolean deleteMemory(int memoryId) {
 		// TODO Auto-generated method stub
@@ -197,145 +194,119 @@ public class fileImpl extends BaseDao implements fileDao {
 		} catch (Exception ex) {
 			return false;
 		}
-		
+
 	}
-	
+
 	@Override
-	public int deleteFilesmem(String startpath){
+	public int deleteFilesmem(String startpath) {
 		Session session = this.getSession();
 		try {
 			String hql = "select sum(size) from HdfsFile where fileUrl like :startpath";
 			Query query = session.createQuery(hql);
 			query.setParameter("startpath", startpath + "%");
 			int ref = Integer.parseInt(query.uniqueResult().toString());
-			
-			System.out.println("111111111111111111111111111"+ref);
+
+			System.out.println("111111111111111111111111111" + ref);
 
 			return ref;
 		} catch (Exception ex) {
 			return 0;
 		}
 	}
-	/*public Users findUser(int userId)
-	{
-		 Session session=this.getSession();
-		  Criteria crit=session.createCriteria(Users.class);
-		  crit.add(Restrictions.eq("userId", userId));
-		  Users newuser=null;
-		  try
-		  {
-		   newuser= (Users)crit.uniqueResult();
-		  }
-		 catch(Exception e)
-		 {
-		  return null;
-		 }
-		 finally
-		 {
-			 session.close();
-		 }
-		  
-		  return newuser;
-	}*/
+
+	/*
+	 * public Users findUser(int userId) { Session session=this.getSession();
+	 * Criteria crit=session.createCriteria(Users.class);
+	 * crit.add(Restrictions.eq("userId", userId)); Users newuser=null; try {
+	 * newuser= (Users)crit.uniqueResult(); } catch(Exception e) { return null;
+	 * } finally { session.close(); }
+	 * 
+	 * return newuser; }
+	 */
 	@Override
 	public HdfsFile findFile(long fileId) {
 		// TODO Auto-generated method stub
-		/*Session session = this.getSession();
-		HdfsFile file = (HdfsFile) session.get(HdfsFile.class, fileId);
-		return file;*/
-		 Session session=this.getSession();
-		  Criteria crit=session.createCriteria(HdfsFile.class);
-		  crit.add(Restrictions.eq("fileId", fileId));
-		  HdfsFile file=null;
-		  try
-		  {
-		   file= (HdfsFile)crit.uniqueResult();
-		  }
-		 catch(Exception e)
-		 {
-		  return null;
-		 }
-		 finally
-		 {
-			 session.close();
-		 }
-		  
-		  return file;
-	
-	}
-	
-/*
-	public long findUserIdByFileId(int currentId) {
+		/*
+		 * Session session = this.getSession(); HdfsFile file = (HdfsFile)
+		 * session.get(HdfsFile.class, fileId); return file;
+		 */
 		Session session = this.getSession();
 		Criteria crit = session.createCriteria(HdfsFile.class);
-		crit.add(Restrictions.eq("fileId", currentId));
+		crit.add(Restrictions.eq("fileId", fileId));
 		HdfsFile file = null;
 		try {
 			file = (HdfsFile) crit.uniqueResult();
 		} catch (Exception e) {
-			return 0;
+			return null;
 		} finally {
 			session.close();
 		}
 
-		return file.getUserId();
-	}*/
+		return file;
+
+	}
+
+	/*
+	 * public long findUserIdByFileId(int currentId) { Session session =
+	 * this.getSession(); Criteria crit =
+	 * session.createCriteria(HdfsFile.class);
+	 * crit.add(Restrictions.eq("fileId", currentId)); HdfsFile file = null; try
+	 * { file = (HdfsFile) crit.uniqueResult(); } catch (Exception e) { return
+	 * 0; } finally { session.close(); }
+	 * 
+	 * return file.getUserId(); }
+	 */
 
 	@Override
 	public HdfsMemory getMemory(int memoryId) {
 		Session session = this.getSession();
-		HdfsMemory memory = (HdfsMemory) session.get(HdfsMemory.class, memoryId);
+		HdfsMemory memory = (HdfsMemory) session
+				.get(HdfsMemory.class, memoryId);
 		return memory;
 	}
-	
+
 	@Override
-	public HdfsMemory find(long memoryId)
-	{
-		  Session session=this.getSession();
-		  Criteria crit=session.createCriteria(HdfsMemory.class);
-		  crit.add(Restrictions.eq("memoryId", memoryId));
-		  HdfsMemory memory=null;
-		  try
-		  {
-		   memory= (HdfsMemory)crit.uniqueResult();
-		  }
-		 catch(Exception e)
-		 {
-		  return null;
-		 }
-		 finally
-		 {
-			 session.close();
-		 }
-		  
-		  return memory;
+	public HdfsMemory find(long memoryId) {
+		Session session = this.getSession();
+		Criteria crit = session.createCriteria(HdfsMemory.class);
+		crit.add(Restrictions.eq("memoryId", memoryId));
+		HdfsMemory memory = null;
+		try {
+			memory = (HdfsMemory) crit.uniqueResult();
+		} catch (Exception e) {
+			return null;
+		} finally {
+			session.close();
+		}
+
+		return memory;
 	}
-	
+
 	@Override
 	public void updateMemory(HdfsMemory memory) {
 		this.getHibernateTemplate().update(memory);
 	}
 
 	@Override
-	public boolean setSafeLevel(short level,String filePath){
+	public boolean setSafeLevel(short level, String filePath) {
 		boolean result = false;
-		
+
 		return result;
 	}
 
 	@Override
 	public void updateEncrypt_DataKey(HdfsFile hdfsFile,
 			byte[] encryptedDataSecretKey) {
-		
-		Session session=this.getSession();
-		Transaction trans=session.beginTransaction();
-		String hql="update HdfsFile hdfsFile set hdfsFile.encryptDataKey=:encryptDataKey where hdfsFile.fileId=:fileId";
-		Query queryupdate=session.createQuery(hql);
+
+		Session session = this.getSession();
+		Transaction trans = session.beginTransaction();
+		String hql = "update HdfsFile hdfsFile set hdfsFile.encryptDataKey=:encryptDataKey where hdfsFile.fileId=:fileId";
+		Query queryupdate = session.createQuery(hql);
 		queryupdate.setBinary("encryptDataKey", encryptedDataSecretKey);
 		queryupdate.setLong("fileId", hdfsFile.getFileId());
-		int ret=queryupdate.executeUpdate();
+		int ret = queryupdate.executeUpdate();
 		trans.commit();
-		
+
 	}
 
 	@Override
@@ -345,10 +316,9 @@ public class fileImpl extends BaseDao implements fileDao {
 		Query query = session.createQuery(hql);
 		query.setParameter("fileUrl", fileUrl);
 		System.out.println(fileUrl);
-		long fileId =  (Long) query.uniqueResult();
+		long fileId = (Long) query.uniqueResult();
 		System.out.println(fileId);
 		return fileId;
 	}
-	
-	
+
 }

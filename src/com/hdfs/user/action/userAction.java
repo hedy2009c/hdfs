@@ -134,28 +134,28 @@ public class userAction extends BaseAction implements ServletRequestAware,
 	}
 
 	public String login() throws Exception {
-        
-		user=this.userservice.findByName(user);
-		//System.out.println("thisuser"+user);
-		System.out.println("checkuser="+this.userservice.getcheckuserById(this.user));
+
+		user = this.userservice.findByName(user);
+		// System.out.println("thisuser"+user);
+		System.out.println("checkuser="
+				+ this.userservice.getcheckuserById(this.user));
 		System.out.println("111111111111111111111111");
-		//System.out.println("phone="+user.getPhone());
-		//System.out.println("username="+user.getUsername());
+		// System.out.println("phone="+user.getPhone());
+		// System.out.println("username="+user.getUsername());
 		if (this.userservice.findById(this.user) == null) {
-			
+
 			this.addFieldError("users.userName", "用户名或者密码错误！");
 			this.user.setPassword(null);
 			return INPUT;
 		}
-        
-	
-		else if(this.userservice.getcheckuserById(this.user) == null){
-			
-			System.out.println("resultcheck="+getUser().getCheckuser());
+
+		else if (this.userservice.getcheckuserById(this.user) == null) {
+
+			System.out.println("resultcheck=" + getUser().getCheckuser());
 			this.addFieldError("users.checkuser", "该帐号未通过验证");
 			return INPUT;
 		}
-		
+
 		else {
 			filelist = fileservice.listAllFile();
 			{
@@ -243,15 +243,15 @@ public class userAction extends BaseAction implements ServletRequestAware,
 		user.setRootDirectory(rootId);
 		this.user = this.userservice.save(user);
 		System.out.println(user.getUsername() + "    " + user.getUserId());
-		
+
 		// 在数据库中为该注册用户创建一个HdfsFile记录，用来表示该用户的根目录
 		// 在hdfs文件系统中为该用户创建一个根目录
 		fileservice.rootmkdir(47, user.getUsername(), user.getUserId()
 				.longValue(), Long.parseLong(rootId));
-		
+
 		// 创建该用户对应的存储空间
 		HdfsMemory memory = fileservice.insertMemory(user.getUserId(), 2);
-		
+
 		// 设置用户关于存储空间Id字段
 		user.setMemoryId(memory.getMemoryId());
 		userservice.updateUser(user);
@@ -346,18 +346,18 @@ public class userAction extends BaseAction implements ServletRequestAware,
 		}
 	}
 
-public String changeusercheck() throws Exception {
-		
-		user=this.userservice.find(user);
-		System.out.println("username="+user.getUsername());
-		System.out.println("checkuser="+user.getCheckuser());
+	public String changeusercheck() throws Exception {
+
+		user = this.userservice.find(user);
+		System.out.println("username=" + user.getUsername());
+		System.out.println("checkuser=" + user.getCheckuser());
 		this.user.setRole(1);
-		if (this.user.getCheckuser()== null) {
+		if (this.user.getCheckuser() == null) {
 			this.user.setCheckuser(1);
 		}
-		
+
 		Users u = userservice.find(user);
-		System.out.println("my test="+user);
+		System.out.println("my test=" + user);
 		if (u == null)
 			return ERROR;
 		else {
@@ -365,7 +365,7 @@ public String changeusercheck() throws Exception {
 			return SUCCESS;
 		}
 	}
-	
+
 	@Override
 	public void setServletRequest(HttpServletRequest arg0) {
 		// TODO Auto-generated method stub

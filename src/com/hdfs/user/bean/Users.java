@@ -18,6 +18,7 @@ public class Users implements java.io.Serializable {
 	private String rootDirectory;
 	private String publicKey;
 	private Integer checkuser;
+
 	// Constructors
 
 	/** default constructor */
@@ -25,13 +26,11 @@ public class Users implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	
 
-	
-	public Users(String username){
+	public Users(String username) {
 		this.username = username;
 	}
-	
+
 	public Users(String username, String rootDirectory) {
 		this.username = username;
 		this.rootDirectory = rootDirectory;
@@ -39,7 +38,8 @@ public class Users implements java.io.Serializable {
 
 	/** full constructor */
 	public Users(String username, String password, String email, String phone,
-			Integer memoryId, Integer role, String rootDirectory,Integer checkuser) {
+			Integer memoryId, Integer role, String rootDirectory,
+			Integer checkuser) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -47,16 +47,16 @@ public class Users implements java.io.Serializable {
 		this.memoryId = memoryId;
 		this.role = role;
 		this.rootDirectory = rootDirectory;
-		this.checkuser=checkuser;
+		this.checkuser = checkuser;
 	}
-	 	
+
 	// Property accessors
 
 	public Integer getUserId() {
 		return this.userId;
 	}
-	
-	public void setUserId(Integer userid){
+
+	public void setUserId(Integer userid) {
 		this.userId = userid;
 	}
 
@@ -68,9 +68,10 @@ public class Users implements java.io.Serializable {
 		return this.username;
 	}
 
-	public void setUsername(String username){
+	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public void setUsername(Object object) {
 		this.username = (String) object;
 	}
@@ -107,7 +108,6 @@ public class Users implements java.io.Serializable {
 		this.memoryId = memoryId;
 	}
 
-
 	public String getRootDirectory() {
 		return this.rootDirectory;
 	}
@@ -123,7 +123,7 @@ public class Users implements java.io.Serializable {
 	public void setPublicKey(String publicKey) {
 		this.publicKey = publicKey;
 	}
-	
+
 	public Integer getRole() {
 		return role;
 	}
@@ -140,5 +140,4 @@ public class Users implements java.io.Serializable {
 		this.checkuser = checkuser;
 	}
 
-	
 }

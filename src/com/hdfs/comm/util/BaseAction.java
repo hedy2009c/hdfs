@@ -7,47 +7,34 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+public class BaseAction extends ActionSupport {
 
+	public static final String SUCCESS = "success";// Ö´ï¿½Ð³É¹ï¿½
+	public static final String FAIL = "fail";// Ö´ï¿½ï¿½Ê§ï¿½ï¿½
+	public String result = "success";// ï¿½É¸Ä±ï¿½
 
-
-
-
-
-
-
-
-public class BaseAction extends ActionSupport{
-
-	public static final String SUCCESS="success";//Ö´ÐÐ³É¹¦
-	public static final String FAIL="fail";//Ö´ÐÐÊ§°Ü
-	public String result="success";//¿É¸Ä±ä
-   
-	
-    /**
-     * @author            
-     * @date           
-     * @description     »ñµÃrequest
-     * @param           null
-     * @return          HttpServletRequest
-     * @exception       null
-     */
+	/**
+	 * @author
+	 * @date
+	 * @description ï¿½ï¿½ï¿½request
+	 * @param null
+	 * @return HttpServletRequest
+	 * @exception null
+	 */
 	public final HttpServletRequest getRequest() {
 		return ServletActionContext.getRequest();
 	}
-	
-	
+
 	/**
-     * @author            
-     * @date            2008-8-15
-     * @description     »ñµÃresponse
-     * @param           null
-     * @return          HttpServletResponse
-     * @exception       null
-     */
+	 * @author
+	 * @date 2008-8-15
+	 * @description ï¿½ï¿½ï¿½response
+	 * @param null
+	 * @return HttpServletResponse
+	 * @exception null
+	 */
 	public final HttpServletResponse getResponse() {
 		return ServletActionContext.getResponse();
 	}
-
-
 
 }

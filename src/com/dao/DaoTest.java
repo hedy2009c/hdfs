@@ -42,8 +42,8 @@ public class DaoTest {
 		ArrayList<Nodes> list = new ArrayList<Nodes>();
 		try {
 			pre = conn.prepareStatement(sql);
-			rs =pre.executeQuery();
-			while (rs.next()){
+			rs = pre.executeQuery();
+			while (rs.next()) {
 				Nodes node = new Nodes();
 				node.setHrefAddress(rs.getString("hrefAddress"));
 				node.setFile_id(rs.getString("file_id"));
@@ -58,12 +58,12 @@ public class DaoTest {
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally{
-			 pre = null;
-			 conn = null;
-			 rs = null;
+		} finally {
+			pre = null;
+			conn = null;
+			rs = null;
 		}
-        return list;
+		return list;
 	}
 
 }

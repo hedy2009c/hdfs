@@ -4,17 +4,21 @@
 package com.hdfsTools.dao;
 
 /**
- * ╤╗рЕио╢╚нд╪Ч╣╫hdfs╣доЮ╧ь╫с©з
+ * О©╫О©╫О©╫О©╫О©╫о╢О©╫О©╫д╪О©╫О©╫О©╫hdfsО©╫О©╫О©╫О©╫ь╫с©О©╫
+ * 
  * @rongjianping
- *
+ * 
  */
 public interface upLoadFile {
 	/**
-	 * ио╢╚╣╔╦Жнд╪Ч
-	 * @param localFile р╙ио╢╚╣днд╪Ч
-	 * @param hdfsFile  ио╢╚╣╫hdfs╣дб╥╬╤
-	 * @return 1 ио╢╚Ёи╧╕ё╛0 ио╢╚й╖╟э
+	 * О©╫о╢О©╫О©╫О©╫О©╫О©╫О©╫д╪О©╫
+	 * 
+	 * @param localFile
+	 *            р╙О©╫о╢О©╫О©╫О©╫О©╫д╪О©╫
+	 * @param hdfsFile
+	 *            О©╫о╢О©╫О©╫О©╫hdfsО©╫О©╫б╥О©╫О©╫
+	 * @return 1 О©╫о╢О©╫О©╫и╧О©╫О©╫О©╫0 О©╫о╢О©╫й╖О©╫О©╫
 	 */
-	public int simpleUpLoad(String localFile,String hdfsFile);
+	public int simpleUpLoad(String localFile, String hdfsFile);
 
 }

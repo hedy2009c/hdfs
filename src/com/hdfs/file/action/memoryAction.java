@@ -14,40 +14,47 @@ public class memoryAction {
 	public int getMemoryId() {
 		return memoryId;
 	}
+
 	public void setMemoryId(int memoryId) {
 		this.memoryId = memoryId;
 	}
+
 	public int getPriority() {
 		return priority;
 	}
+
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
+
 	public int getTotalmemory() {
 		return totalmemory;
 	}
+
 	public void setTotalmemory(int totalmemory) {
 		this.totalmemory = totalmemory;
 	}
+
 	public int getMemoryused() {
 		return memoryused;
 	}
+
 	public void setMemoryused(int memoryused) {
 		this.memoryused = memoryused;
 	}
+
 	public fileService getFileservice() {
 		return fileservice;
 	}
+
 	public void setFileservice(fileService fileservice) {
 		this.fileservice = fileservice;
 	}
 
-	public boolean insertMemory(int userId,int type){
-		
+	public boolean insertMemory(int userId, int type) {
+
 		fileservice.insertMemory(userId, type);
 		return false;
 	}
-	
-	
-}
 
+}

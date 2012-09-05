@@ -15,44 +15,45 @@ import org.apache.hadoop.util.Progressable;
 
 import com.hdfsTools.dao.upLoadFile;
 
-
-
 /**
  * 文件上传的实现类
+ * 
  * @author rongjianping
- *
+ * 
  */
 @SuppressWarnings("deprecation")
-public class upLoadFileImpl implements upLoadFile{
+public class upLoadFileImpl implements upLoadFile {
 
 	/**
-	 * @param localFile example /docs/1400-8.txt
-	 * @param hdfsFile  example hdfs://localhost/user/tom/1400-8.txt
+	 * @param localFile
+	 *            example /docs/1400-8.txt
+	 * @param hdfsFile
+	 *            example hdfs://localhost/user/tom/1400-8.txt
 	 */
 	@Override
 	public int simpleUpLoad(String localFile, String hdfsFile) {
 
-		try{	
-		InputStream in = new BufferedInputStream(new FileInputStream(localFile));
-		Configuration conf = new Configuration();
-		FileSystem fs = FileSystem.get(URI.create(hdfsFile), conf);
-		OutputStream out = fs.create(new Path(hdfsFile), new Progressable() {
-		public void progress() {
-		System.out.print(".");
-		}
-		});		
-		IOUtils.copyBytes(in, out, 4096, true);
-		IOUtils.closeStream(in);
-		return 1;
-		}catch (IOException e){
+		try {
+			InputStream in = new BufferedInputStream(new FileInputStream(
+					localFile));
+			Configuration conf = new Configuration();
+			FileSystem fs = FileSystem.get(URI.create(hdfsFile), conf);
+			OutputStream out = fs.create(new Path(hdfsFile),
+					new Progressable() {
+						@Override
+						public void progress() {
+							System.out.print(".");
+						}
+					});
+			IOUtils.copyBytes(in, out, 4096, true);
+			IOUtils.closeStream(in);
+			return 1;
+		} catch (IOException e) {
 			System.out.println("发生了IO异常");
 			return 0;
-		}finally {
-			
+		} finally {
+
 		}
-		}
-		
 	}
 
-
-
+}
