@@ -134,13 +134,28 @@ public class userAction extends BaseAction implements ServletRequestAware,
 	}
 
 	public String login() throws Exception {
-
+        
+		user=this.userservice.findByName(user);
+		//System.out.println("thisuser"+user);
+		System.out.println("checkuser="+this.userservice.getcheckuserById(this.user));
+		System.out.println("111111111111111111111111");
+		//System.out.println("phone="+user.getPhone());
+		//System.out.println("username="+user.getUsername());
 		if (this.userservice.findById(this.user) == null) {
+			
 			this.addFieldError("users.userName", "用户名或者密码错误！");
 			this.user.setPassword(null);
 			return INPUT;
 		}
-
+        
+	
+		else if(this.userservice.getcheckuserById(this.user) == null){
+			
+			System.out.println("resultcheck="+getUser().getCheckuser());
+			this.addFieldError("users.checkuser", "该帐号未通过验证");
+			return INPUT;
+		}
+		
 		else {
 			filelist = fileservice.listAllFile();
 			{
@@ -209,7 +224,7 @@ public class userAction extends BaseAction implements ServletRequestAware,
 
 		else {
 			user = this.userservice.findById(this.user);
-			if (user.getrole() != 2) {
+			if (user.getRole() != 2) {
 				this.addFieldError("users.userName", "您不是管理员身份！");
 				return INPUT;
 			}
@@ -256,7 +271,7 @@ public class userAction extends BaseAction implements ServletRequestAware,
 		Map app = ac.getApplication();
 		this.user.setUserId(ac.getSession().get("userid"));
 		this.user.setUsername(ac.getSession().get("userName"));
-		this.user.setrole(1);
+		this.user.setRole(1);
 		if (this.user.getPassword() == null) {
 			this.user.setPassword(this.userservice.findByName(user)
 					.getPassword());
@@ -303,7 +318,7 @@ public class userAction extends BaseAction implements ServletRequestAware,
 	}
 
 	public String modifyuser() throws Exception {
-		this.user.setrole(1);
+		this.user.setRole(1);
 		if (this.user.getPassword() == null) {
 			this.user.setPassword(this.userservice.findByName(user)
 					.getPassword());
@@ -331,6 +346,26 @@ public class userAction extends BaseAction implements ServletRequestAware,
 		}
 	}
 
+public String changeusercheck() throws Exception {
+		
+		user=this.userservice.find(user);
+		System.out.println("username="+user.getUsername());
+		System.out.println("checkuser="+user.getCheckuser());
+		this.user.setRole(1);
+		if (this.user.getCheckuser()== null) {
+			this.user.setCheckuser(1);
+		}
+		
+		Users u = userservice.find(user);
+		System.out.println("my test="+user);
+		if (u == null)
+			return ERROR;
+		else {
+			userservice.updateUser(user);
+			return SUCCESS;
+		}
+	}
+	
 	@Override
 	public void setServletRequest(HttpServletRequest arg0) {
 		// TODO Auto-generated method stub

@@ -37,9 +37,13 @@
 		<action name="listuser" class="listUserAction">
 		       <result name="success">/admin/user_list.jsp</result>
 		       <param name="entity">com.ssh.bean.Users</param>
-		       <param name="fields">userId,username,password,email,phone,memoryId</param>
+		       <param name="fields">userId,username,password,email,phone,memoryId,checkuser</param>
 		       <result name="none">/admin/user_list_fail.jsp</result>
 		<param name="rows">5</param>
+		</action>
+		<action name="userchangecheck" class="userAction" method="changeusercheck">
+			<result name="success">/admin/user_changecheck_success.jsp</result>
+			<result name="error">/admin/user_changecheck_fail.jsp</result>
 		</action>
 		
 	</package>

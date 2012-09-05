@@ -214,4 +214,41 @@ public class userImpl extends BaseDao implements userDao{
 		trans.commit();
 		
 	}
+	
+	@Override
+	public Users getcheckuserById(Users user) {
+		 
+		  
+		  
+		  Session session=this.getSession();
+		  Criteria crit=session.createCriteria(Users.class);
+		  user=this.findByName(user);
+		  String s="";
+		  s=user.getCheckuser()+"";
+		  //crit.add(Restrictions.eq("username", user.getUsername()));
+    	  crit.add(Restrictions.eq("s",1));//是否激活
+    	  //System.out.println("username in the function = "+user.getUsername());
+		  System.out.println("checknumber in the function = "+user.getCheckuser());
+		  Users newuser = null;
+		  try
+		  {
+		   //newuser= (Users)crit.uniqueResult();
+			  if(user.getCheckuser()==1)
+			  {newuser=user;}
+			  else {newuser=null;}
+			  
+		   
+		  }
+		 catch(Exception e)
+		 {
+		  return null;
+		 }
+		 finally
+		 {
+			 session.close();
+		 }
+		  System.out.println("newuser"+newuser);
+		  return newuser;
+		  
+	}
 }

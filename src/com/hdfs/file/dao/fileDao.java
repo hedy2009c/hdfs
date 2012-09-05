@@ -13,6 +13,8 @@ public interface fileDao {
 	
 	public List<HdfsFile> listFile (long currentId, long userId);
 	
+	public List<HdfsFile> SearchFile(String fileName,long userId);
+	
 	/**
 	 * 根据目录id，返回目录的url
 	 * @param fileId 目录id

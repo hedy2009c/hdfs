@@ -111,6 +111,18 @@ public class fileAction extends BaseAction {
 
 	}
 
+
+	/**  搜索
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	public String dosearchFile()  {
+		wddescjson = fileservice.searchfile( filename, userId);
+		return SUCCESS;
+		
+	}
+	
 	/**
 	 * 删除文件或者文件夹
 	 * 

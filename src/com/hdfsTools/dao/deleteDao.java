@@ -7,7 +7,7 @@ import org.apache.hadoop.conf.Configuration;
 public interface deleteDao {
 	
 	/**
-	 * É¾³ýÎÄ¼þ
+	 * É¾ï¿½ï¿½ï¿½Ä¼ï¿½
 	 * @param fileUrl
 	 * @return
 	 * @throws IOException
@@ -15,7 +15,7 @@ public interface deleteDao {
 	public boolean deleteFile(Configuration conf,String fileUrl)throws IOException;;
 	
 	/**
-	 * É¾³ýÄ¿Â¼
+	 * É¾ï¿½ï¿½Ä¿Â¼
 	 * @param directorUrl
 	 * @return
 	 * @throws IOException

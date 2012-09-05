@@ -37,7 +37,6 @@ public class upLoadFileImpl implements upLoadFile{
 		Configuration conf = new Configuration();
 		FileSystem fs = FileSystem.get(URI.create(hdfsFile), conf);
 		OutputStream out = fs.create(new Path(hdfsFile), new Progressable() {
-		@Override
 		public void progress() {
 		System.out.print(".");
 		}

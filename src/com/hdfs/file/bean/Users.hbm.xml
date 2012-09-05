@@ -32,5 +32,9 @@
                 &#211;&#195;&#187;&#167;&#182;&#212;&#211;&#166;&#181;&#196;&#184;&#249;&#196;&#191;&#194;&#188;&#163;&#172;&#182;&#212;&#211;&#166;&#211;&#218;directory&#192;&#239;&#195;&#230;&#181;&#196;&#196;&#191;&#194;&#188;</comment>
             </column>
         </property>
+       
+          <property name="checkuser" type="java.lang.Integer">
+               <column name="checkuser" />
+               </property>
     </class>
 </hibernate-mapping>

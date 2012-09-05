@@ -49,6 +49,9 @@
 			</li>
 			<li><a href="#" command="upload" id="upload">上传</a>
 			</li>
+			 <li>
+			 <a href="#" command="makeDir" id="searchFile">搜索</a>
+			 </li>
 			<!-- <li>排序</li> -->
 		</ul>
 		
@@ -146,6 +149,44 @@
 								})
 								return false;
 							});
+							
+							/*----------------------------------------------------------------------------*/
+		
+		
+		$('#searchFile').bind('click',function(event){
+	
+				//获取对象的坐标，让对话框在按钮附近弹出
+			var parentId = getParentId();
+			var _html = '<form id ="createDirForm" action="" method="post">'+
+						'<label>输入要查找的文件名:</label><input type="text" id="searchFileName" name="searchFileName"></input>'+
+						'<input type="hidden" name="parentID" id="parentID" value="'+parentId+'"></form>';
+			var _x = event.clientX;
+			var _y = event.clientY;
+			var _this = this;
+			artDialog({
+				id:'menu_4834783',
+				content:_html,
+				left:_x+20,
+				top:_y+20,
+				title: '搜索文件'
+				}, 
+				function(){ 
+						var currentId=$('#parentID').val();
+						var filename=$('#searchFileName').val();
+						var userId=$('#userId').val();
+						var url="searchFile?currentId="+currentId+"&filename="+filename+"&userId="+userId;
+						window.location.href=url;
+						
+						
+					}
+				)
+			return false;
+		});
+		
+		
+		
+		/*----------------------------------------------------------------------------*/
+							
 			$('#upload')
 					.bind(
 							'click',

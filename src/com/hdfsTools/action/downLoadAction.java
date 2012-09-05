@@ -3,8 +3,6 @@ package com.hdfsTools.action;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.hadoop.conf.Configuration;
-
 import com.hdfsTools.dao.downLoadDao;
 import com.hdfsTools.impl.downLoadImpl;
 

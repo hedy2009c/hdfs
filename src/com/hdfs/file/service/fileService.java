@@ -38,6 +38,9 @@ public interface fileService {
 	 * @throws IOException 
 	 */
 	Boolean mkdir(long parentId,String name ,long userId) throws IOException;
+	
+	String searchfile(String name ,long userId) ;
+	
 	Boolean rootmkdir(long parentId, String name ,long userId, long rootid) throws IOException;
 	/**
 	 * 根据文件Id删除文件，并且返回当前文件所在文件夹的文件列表

@@ -2,8 +2,6 @@ package com.hdfsTools.action;
 
 import java.io.IOException;
 
-import org.apache.hadoop.conf.Configuration;
-
 import com.hdfsTools.dao.deleteDao;
 import com.hdfsTools.impl.deleteImpl;
 

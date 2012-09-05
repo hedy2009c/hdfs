@@ -64,6 +64,12 @@ public interface userDao {
 	 */
 	public Users findid(int userid);
 	
+	/**
+	 * 通过id返回检验码
+	 * @param user
+	 * @return
+	 */
+	public Users getcheckuserById(Users user);
 
 	/**
 	 * 判断用户的pulic_key属性是否为空

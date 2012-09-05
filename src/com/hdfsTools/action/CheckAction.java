@@ -6,9 +6,6 @@ package com.hdfsTools.action;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileStatus;
-
 import com.hdfsTools.dao.checkDao;
 import com.hdfsTools.impl.checkImpl;
 

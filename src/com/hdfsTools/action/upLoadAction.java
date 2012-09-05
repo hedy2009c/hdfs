@@ -2,8 +2,6 @@ package com.hdfsTools.action;
 
 import java.io.File;
 
-import org.apache.hadoop.conf.Configuration;
-
 import com.hdfsTools.dao.upLoadDao;
 import com.hdfsTools.impl.upLoadImpl;
 

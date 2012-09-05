@@ -36,5 +36,9 @@
         <property name="publicKey" type="java.lang.String">
         	<column name="public_key" length="20"></column>
         </property>
+          <property name="checkuser" type="java.lang.Integer">
+   <column name="checkuser" not-null="false">
+   </column>
+  </property>
     </class>
 </hibernate-mapping>

@@ -17,7 +17,7 @@ public class Users implements java.io.Serializable {
 	private Integer role;
 	private String rootDirectory;
 	private String publicKey;
-
+	private Integer checkuser;
 	// Constructors
 
 	/** default constructor */
@@ -39,7 +39,7 @@ public class Users implements java.io.Serializable {
 
 	/** full constructor */
 	public Users(String username, String password, String email, String phone,
-			Integer memoryId, Integer role, String rootDirectory) {
+			Integer memoryId, Integer role, String rootDirectory,Integer checkuser) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -47,8 +47,9 @@ public class Users implements java.io.Serializable {
 		this.memoryId = memoryId;
 		this.role = role;
 		this.rootDirectory = rootDirectory;
+		this.checkuser=checkuser;
 	}
-
+	 	
 	// Property accessors
 
 	public Integer getUserId() {
@@ -106,13 +107,6 @@ public class Users implements java.io.Serializable {
 		this.memoryId = memoryId;
 	}
 
-	public Integer getrole() {
-		return this.role;
-	}
-
-	public void setrole(Integer role) {
-		this.role = role;
-	}
 
 	public String getRootDirectory() {
 		return this.rootDirectory;
@@ -129,5 +123,22 @@ public class Users implements java.io.Serializable {
 	public void setPublicKey(String publicKey) {
 		this.publicKey = publicKey;
 	}
+	
+	public Integer getRole() {
+		return role;
+	}
 
+	public void setRole(Integer role) {
+		this.role = role;
+	}
+
+	public Integer getCheckuser() {
+		return checkuser;
+	}
+
+	public void setCheckuser(Integer checkuser) {
+		this.checkuser = checkuser;
+	}
+
+	
 }

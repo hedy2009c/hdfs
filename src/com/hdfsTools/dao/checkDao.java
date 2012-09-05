@@ -8,32 +8,32 @@ import org.apache.hadoop.fs.FileStatus;
 
 public interface checkDao {
     /**
-     * 列出指定目录的所有文件和文件夹
-     * @param directory 指定的目录
-     * @param  conf 指定的文件系统的配置
+     * 锟叫筹拷指锟斤拷目录锟斤拷锟斤拷锟斤拷锟侥硷拷锟斤拷锟侥硷拷锟斤拷
+     * @param directory 指锟斤拷锟斤拷目录
+     * @param  conf 指锟斤拷锟斤拷锟侥硷拷系统锟斤拷锟斤拷锟斤拷
      * @return
      */
 	public List<FileStatus> doList(String directory ,Configuration conf)throws IOException;
     /**
-     * 列出指定目录的所有文件
-     * @param directory 指定的目录
-     * @param conf 指定的文件系统的配置
+     * 锟叫筹拷指锟斤拷目录锟斤拷锟斤拷锟斤拷锟侥硷拷
+     * @param directory 指锟斤拷锟斤拷目录
+     * @param conf 指锟斤拷锟斤拷锟侥硷拷系统锟斤拷锟斤拷锟斤拷
      * @return
      */
 	public List<FileStatus> doListFile(String directory ,Configuration conf)throws IOException;
 	
 	 /**
-     * 列出指定目录的所有目录
-     * @param directory 指定的目录
-     * @param conf 指定的文件系统的配置
+     * 锟叫筹拷指锟斤拷目录锟斤拷锟斤拷锟斤拷目录
+     * @param directory 指锟斤拷锟斤拷目录
+     * @param conf 指锟斤拷锟斤拷锟侥硷拷系统锟斤拷锟斤拷锟斤拷
      * @return
      */
 	public List<FileStatus> doListDirectory(String directory ,Configuration conf)throws IOException;
 	
 	/**
 	 * 
-	 * @param path 指定的文件的路径
-	 * @param conf 指定的文件系统的配置
+	 * @param path 指锟斤拷锟斤拷锟侥硷拷锟斤拷路锟斤拷
+	 * @param conf 指锟斤拷锟斤拷锟侥硷拷系统锟斤拷锟斤拷锟斤拷
 	 * @return
 	 * @throws IOException
 	 */

@@ -41,8 +41,15 @@
 					<td>
 						容量ID
 					</td>
+					
+					<td>
+						是否被审核
+					</td>
 					<td>
 						删除用户
+					</td>
+					<td>
+						审核
 					</td>
 					</tr>
 				</thead>
@@ -54,8 +61,12 @@
 							</td>
 
 						</s:iterator>
+						
 						<td>
 							<a href="userdelete?user.userId=<s:property value="#row.userId"/>">删除</a>
+						</td>
+						<td>
+							<a href="userchangecheck?user.userId=<s:property value="#row.userId"/>">通过</a>
 						</td>
 					</tr>
 				</s:iterator>

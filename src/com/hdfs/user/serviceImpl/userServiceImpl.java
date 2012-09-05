@@ -60,6 +60,10 @@ public class userServiceImpl implements userService{
 		return this.userdao.saveUsers(users);
 	}
 
+	@Override
+	public Users getcheckuserById(Users user) {
+		return this.userdao.getcheckuserById(user);
+	}
 
 
 }

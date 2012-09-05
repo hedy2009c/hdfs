@@ -140,6 +140,15 @@
 		<action name="NodesPrint" class="fileAction" method="nodeprint">
 			<result name="xmlMessage" type="plainText"></result>
     	</action>
+    	
+    	<action name="searchFile" class="fileAction" method="dosearchFile">
+			<result name="success" >
+				/webDisk/searchResult.jsp
+			</result>
+		    <result name="fail">
+				/error.jsp
+		    </result>
+		</action>
 	</package>
 	
 	

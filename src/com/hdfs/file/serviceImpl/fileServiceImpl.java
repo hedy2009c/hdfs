@@ -108,6 +108,61 @@ public class fileServiceImpl implements fileService{
 	}
 	
 	@Override
+	public String searchfile(String name, long userId)
+			 {
+		List<HdfsFile> fileList=filedao.SearchFile(name, userId);//获得文件列表
+		//转化为json格式
+		ArrayList<checkFile> list=new ArrayList();
+		System.out.println(fileList.toString());
+		
+		for(HdfsFile hdfsfile : fileList){
+			checkFile file=new checkFile();
+			if(null==hdfsfile.getCreateTime()){
+				file.setCreateTime("");
+			}else{
+				file.setCreateTime(hdfsfile.getCreateTime().toString());
+			}	
+			if(null==hdfsfile.getDeadline()){
+				file.setTime("");
+			}else{
+				file.setTime(hdfsfile.getDeadline().toString());
+			}	
+			file.setId(hdfsfile.getFileId());
+			if(null==hdfsfile.getModifiedTime()){
+				file.setModifiedTime("");
+			}else{
+				file.setModifiedTime(hdfsfile.getModifiedTime().toString());
+			}
+			file.setName(hdfsfile.getFileName());
+			file.setParentId(hdfsfile.getParentid());
+			if(null==hdfsfile.getSafeLevel()){
+				file.setSaveLevel(0);
+			}else{
+				file.setSaveLevel(hdfsfile.getSafeLevel());
+			}
+			if(null==hdfsfile.getSize()){
+				file.setSize(-1);
+			}else{
+				file.setSize(hdfsfile.getSize());
+			}
+			file.setType(hdfsfile.getType());
+			file.setUrl(hdfsfile.getFileUrl());
+			
+
+			list.add(file);
+			file=null;
+		}
+		JSONObject jsonresult=new JSONObject();
+		jsonresult.accumulate("list", list);
+	    String jsonList=JSONUtils.valueToString(jsonresult);
+	    System.out.println(jsonList);
+		return jsonList;
+		
+	}
+
+	
+	
+	@Override
 	public List<HdfsFile> listAllFile() {
 		List<HdfsFile> fileList=filedao.listAllFile();
 		return fileList;

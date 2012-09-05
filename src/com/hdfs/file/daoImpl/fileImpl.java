@@ -46,6 +46,26 @@ public class fileImpl extends BaseDao implements fileDao {
 	}
 	
 	@Override
+	public List<HdfsFile> SearchFile(String searchfileName,long userid) {
+		
+		
+		// TODO Auto-generated method stub
+				
+				String hql = " from HdfsFile where fileName like :param and type>0 and userId =:userid";
+				Session session = this.getSession();
+				Query query = session.createQuery(hql);
+				query.setParameter("param", "%" + searchfileName + "%");
+				query.setParameter("userid", userid);
+				//query.setParameter("fileName", searchfileName);
+				List<HdfsFile> fileList = query.list();
+				System.out.println("set1");
+				System.out.println("搜索hhhh"+fileList.toString());
+				return fileList;
+	}
+
+	
+	
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<HdfsFile> listAllFile() {
 

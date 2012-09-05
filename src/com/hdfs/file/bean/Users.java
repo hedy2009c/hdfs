@@ -15,12 +15,13 @@ public class Users implements java.io.Serializable {
 	private Integer memoryId;
 	private Integer active;
 	private String rootDirectory;
+	private Integer checkuser;
 
 	public Users() {
 	}
 
 	public Users(String username, String password, String email, String phone,
-			Integer memoryId, Integer active, String rootDirectory) {
+			Integer memoryId, Integer active, String rootDirectory,Integer checkuser) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -28,6 +29,7 @@ public class Users implements java.io.Serializable {
 		this.memoryId = memoryId;
 		this.active = active;
 		this.rootDirectory = rootDirectory;
+		this.checkuser=checkuser;
 	}
 
 	public Long getUserId() {
@@ -93,5 +95,14 @@ public class Users implements java.io.Serializable {
 	public void setRootDirectory(String rootDirectory) {
 		this.rootDirectory = rootDirectory;
 	}
+	
+	public Integer getCheckUser(){
+		return this.checkuser;
+	}
+	
+	public void setCheckuser(Integer checkuser) {
+		this.checkuser = checkuser;
+	}
+
 
 }

@@ -28,5 +28,7 @@ public interface userService {
 	public Users find(Users user);
 	
 	public Users findByName(Users user);
+	
+	public Users getcheckuserById(Users user);
 
 }
